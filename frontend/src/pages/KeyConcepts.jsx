@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 
 import AppHeader from "../components/AppHeader";
+
 import { getConcepts } from "../services/notesApi";
 
 export default function KeyConcepts() {
@@ -519,7 +520,7 @@ export default function KeyConcepts() {
         </div>
 
       </main>
-
+      <Footer />
     </div>
   );
 }

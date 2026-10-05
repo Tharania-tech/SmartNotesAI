@@ -1,23 +1,30 @@
-
 :root {
-  --sn-primary: #0f9f94;
-  --sn-primary-dark: #075e59;
-  --sn-cyan: #18b8c8;
-  --sn-navy: #132d58;
-  --sn-bg: #f5fbfc;
-  --sn-card: #ffffff;
-  --sn-border: #dce8f0;
-  --sn-success: #0f9f94;
+    --sn-primary: #0f9f94;
+    --sn-primary-dark: #075e59;
+    --sn-cyan: #18b8c8;
+    --sn-navy: #132d58;
+    --sn-bg: #f5fbfc;
+    --sn-card: #ffffff;
+    --sn-border: #dce8f0;
+    --sn-success: #0f9f94;
 }
 
 body {
-  background: var(--sn-bg);
-  color: var(--sn-navy);
+    background: var(--sn-bg);
+    color: var(--sn-navy);
 }
 
-button, input, textarea, select { font-family: inherit; }
+button,
+input,
+textarea,
+select {
+    font-family: inherit;
+}
 
-::selection { background: rgba(15, 159, 148, 0.18); color: var(--sn-navy); }
+::selection {
+    background: rgba(15, 159, 148, 0.18);
+    color: var(--sn-navy);
+}
 
 * {
     box-sizing: border-box;
@@ -10175,12 +10182,6 @@ select {
     font-weight: 800;
 }
 
-.dashboard-analytics-chart {
-    margin-top: 24px;
-    padding-top: 17px;
-    border-top: 1px solid #edf2f5;
-}
-
 .analytics-chart-header {
     display: flex;
     align-items: center;
@@ -12706,4 +12707,293 @@ select {
         width: 40px;
         padding: 0;
     }
+}
+
+
+/* ================================
+   WEEKLY ACTIVITY CHART
+   ================================ */
+
+.dashboard-analytics-chart {
+    width: 100%;
+    height: 225px;
+    display: flex;
+    position: relative;
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+
+/* ----------------
+   Y AXIS
+   ---------------- */
+
+.dashboard-chart-y-axis {
+    width: 28px;
+    height: 208px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-top: 1px;
+    padding-bottom: 0;
+    box-sizing: border-box;
+}
+
+.dashboard-chart-y-axis span {
+    font-size: 10px;
+    font-weight: 500;
+    color: #7d9099;
+    line-height: 1;
+}
+
+
+/* ----------------
+   MAIN CHART AREA
+   ---------------- */
+
+.dashboard-chart-area {
+    flex: 1;
+    height: 225px;
+    position: relative;
+    min-width: 0;
+}
+
+
+/* ----------------
+   GRID LINES
+   ---------------- */
+
+.dashboard-chart-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 208px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.dashboard-chart-grid span {
+    width: 100%;
+    height: 1px;
+    background: #e5edef;
+    display: block;
+}
+
+
+/* ----------------
+   BARS CONTAINER
+   ---------------- */
+
+.dashboard-chart-bars {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    height: 208px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+
+/* ----------------
+   INDIVIDUAL BAR
+   ---------------- */
+
+.dashboard-chart-bar-column {
+    width: 24px;
+    height: 208px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+}
+
+
+/* Actual bar */
+
+.dashboard-chart-bar {
+    width: 24px;
+    min-height: 3px;
+    border-radius: 9px 9px 4px 4px;
+    background: linear-gradient( to bottom, #4bc4c0 0%, #19aaa9 100%);
+    transition: height 0.4s ease, transform 0.2s ease;
+    box-shadow: 0 3px 8px rgba(20, 160, 160, 0.12);
+}
+
+
+/* Hover */
+
+.dashboard-chart-bar-column:hover .dashboard-chart-bar {
+    transform: translateY(-2px);
+}
+
+
+/* ----------------
+   DAY LABELS
+   ---------------- */
+
+.dashboard-chart-days {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 0;
+    height: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.dashboard-chart-days span {
+    width: 24px;
+    text-align: center;
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 600;
+    color: #71848d;
+    white-space: nowrap;
+}/* =========================================
+   SMARTNOTES AI - GLOBAL FOOTER
+   ========================================= */
+
+.app-footer {
+  width: 100%;
+  margin-top: 50px;
+  background: #f7fbfa;
+  border-top: 1px solid #e3eeee;
+  box-sizing: border-box;
+}
+
+.app-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 32px 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+
+/* -----------------------------
+   BRAND
+   ----------------------------- */
+
+.app-footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.app-footer-logo {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: linear-gradient(
+    135deg,
+    #20b8b0,
+    #079b9d
+  );
+
+  color: white;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  box-shadow: 0 5px 12px rgba(20, 165, 165, 0.16);
+}
+
+.app-footer-brand h3 {
+  margin: 0;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  color: #18343d;
+}
+
+.app-footer-brand p {
+  margin: 4px 0 0;
+
+  font-size: 12px;
+  color: #71848d;
+}
+
+
+/* -----------------------------
+   FOOTER LINKS
+   ----------------------------- */
+
+.app-footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+
+  gap: 22px;
+}
+
+.app-footer-links span {
+  font-size: 12px;
+  font-weight: 500;
+  color: #71848d;
+}
+
+
+/* -----------------------------
+   BOTTOM FOOTER
+   ----------------------------- */
+
+.app-footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  padding: 16px 32px;
+
+  border-top: 1px solid #e5eeee;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  font-size: 11px;
+  color: #87979d;
+}
+
+
+/* -----------------------------
+   RESPONSIVE
+   ----------------------------- */
+
+@media (max-width: 768px) {
+
+  .app-footer-inner {
+    padding: 28px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .app-footer-links {
+    justify-content: flex-start;
+    gap: 12px 18px;
+  }
+
+  .app-footer-bottom {
+    padding: 15px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
 }

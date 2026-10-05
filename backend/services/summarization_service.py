@@ -1,40 +1,164 @@
+"""
+SmartNotes AI - Advanced Academic Summarization Service
+
+Purpose:
+    Advanced summarization for:
+    - PDF notes
+    - OCR text
+    - Handwritten notes
+    - Academic notes
+    - Technical notes
+    - DBMS / Java / Python / AI / ML / CS subjects
+
+Important:
+    Keep the public API:
+        SummarizationService.summarize_text(text, length="medium")
+
+No frontend/API changes are required.
+"""
+
 import re
+import math
 from collections import Counter
 
 
-# =========================================================
-# OPTIONAL SPELL CHECKER
-# =========================================================
-
-try:
-    from spellchecker import SpellChecker
-
-    SPELLCHECK_AVAILABLE = True
-
-except ImportError:
-
-    SpellChecker = None
-    SPELLCHECK_AVAILABLE = False
-
-
-# =========================================================
-# SUMMARIZATION SERVICE
-# =========================================================
-
 class SummarizationService:
 
-    # =====================================================
-    # SPELL CHECKER CACHE
-    # =====================================================
-
-    _spell_checker = None
-    _spell_cache = {}
-
-    # =====================================================
-    # TECHNICAL WORDS
-    # =====================================================
+    # ============================================================
+    # TECHNICAL TERMS
+    # ============================================================
 
     TECHNICAL_TERMS = {
+        # Computer Science
+        "algorithm",
+        "algorithms",
+        "application",
+        "architecture",
+        "backend",
+        "database",
+        "databases",
+        "data",
+        "dataset",
+        "datasets",
+        "development",
+        "framework",
+        "frontend",
+        "fullstack",
+        "function",
+        "functions",
+        "interface",
+        "model",
+        "program",
+        "programming",
+        "software",
+        "system",
+        "systems",
+
+        # DBMS
+        "dbms",
+        "sql",
+        "nosql",
+        "mysql",
+        "mongodb",
+        "database",
+        "schema",
+        "schemas",
+        "relation",
+        "relations",
+        "relational",
+        "tuple",
+        "tuples",
+        "attribute",
+        "attributes",
+        "domain",
+        "domains",
+        "primary",
+        "foreign",
+        "candidate",
+        "composite",
+        "super",
+        "key",
+        "keys",
+        "normalization",
+        "normalization",
+        "normal",
+        "functional",
+        "dependency",
+        "dependencies",
+        "transaction",
+        "transactions",
+        "concurrency",
+        "serializability",
+        "serializable",
+        "deadlock",
+        "index",
+        "indexes",
+        "indexing",
+        "query",
+        "queries",
+        "join",
+        "joins",
+        "relational",
+        "algebra",
+        "acid",
+        "atomicity",
+        "consistency",
+        "isolation",
+        "durability",
+        "recovery",
+        "checkpoint",
+        "checkpointing",
+        "cursor",
+        "trigger",
+        "view",
+        "views",
+        "constraint",
+        "constraints",
+        "entity",
+        "entities",
+        "relationship",
+        "relationships",
+        "cardinality",
+        "aggregation",
+        "generalization",
+        "specialization",
+        "hierarchical",
+        "network",
+        "b-tree",
+        "b+",
+        "mvcc",
+        "ddl",
+        "dml",
+        "dcl",
+        "tcl",
+        "ansi",
+        "sparc",
+
+        # Programming
+        "java",
+        "python",
+        "javascript",
+        "typescript",
+        "react",
+        "node",
+        "nodejs",
+        "flask",
+        "spring",
+        "springboot",
+        "html",
+        "css",
+        "jsx",
+        "rest",
+        "api",
+        "http",
+        "json",
+        "xml",
+        "git",
+        "github",
+        "npm",
+        "vite",
+
+        # AI / ML
         "ai",
         "artificial",
         "intelligence",
@@ -44,1334 +168,1158 @@ class SummarizationService:
         "neural",
         "network",
         "networks",
-        "nlp",
-        "natural",
-        "language",
-        "processing",
-
-        "python",
-        "java",
-        "javascript",
-        "typescript",
-        "html",
-        "html5",
-        "css",
-        "css3",
-        "react",
-        "reactjs",
-        "node",
-        "nodejs",
-        "flask",
-        "django",
-        "spring",
-        "springboot",
-        "springframework",
-
-        "mysql",
-        "mongodb",
-        "postgresql",
-        "database",
-        "databases",
-        "sql",
-        "nosql",
-
-        "api",
-        "apis",
-        "rest",
-        "restful",
-        "http",
-        "https",
-        "url",
-        "urls",
-        "json",
-        "xml",
-
+        "model",
+        "models",
+        "llm",
+        "transformer",
+        "transformers",
+        "embedding",
+        "embeddings",
+        "tokenizer",
         "ocr",
         "paddleocr",
         "opencv",
+        "tensorflow",
+        "pytorch",
+        "classification",
+        "regression",
+        "prediction",
+        "training",
+        "validation",
+        "inference",
 
-        "bart",
-        "bert",
-        "t5",
-        "qwen",
-        "llm",
-        "llms",
-        "transformer",
-        "transformers",
-        "token",
-        "tokens",
-        "tokenizer",
-        "embedding",
-        "embeddings",
-
-        "github",
-        "git",
-        "npm",
-        "vite",
-        "jsx",
-        "tsx",
-
-        "frontend",
-        "backend",
-        "fullstack",
-        "software",
-        "hardware",
-        "server",
-        "client",
-
-        "algorithm",
-        "algorithms",
-        "dataset",
-        "datasets",
-        "model",
-        "models",
-        "framework",
-        "frameworks",
-        "programming",
-        "computer",
-        "computing",
-        "technology",
-        "technologies",
+        # Common academic technical terms
+        "analysis",
+        "method",
+        "methods",
+        "process",
+        "structure",
+        "structures",
+        "concept",
+        "concepts",
+        "principle",
+        "principles",
+        "characteristic",
+        "characteristics",
+        "advantage",
+        "advantages",
+        "disadvantage",
+        "disadvantages",
+        "feature",
+        "features",
+        "purpose",
+        "objective",
+        "objectives",
+        "application",
+        "applications",
+        "implementation",
+        "implementation",
+        "performance",
+        "security",
+        "integrity",
+        "authentication",
+        "authorization",
     }
 
-    # =====================================================
-    # COMMON OCR SPELLING CORRECTIONS
-    # =====================================================
+    # ============================================================
+    # OCR CORRECTIONS
+    # ============================================================
 
     OCR_CORRECTIONS = {
-
-        # Artificial intelligence
         "artifical": "artificial",
-        "artificaly": "artificially",
-        "inteligence": "intelligence",
-        "intellgence": "intelligence",
-        "intelllgence": "intelligence",
-
-        # Machine learning
+        "artificalintelligence": "artificial intelligence",
+        "intelligance": "intelligence",
         "machlne": "machine",
-        "machne": "machine",
-        "learniing": "learning",
-        "lernning": "learning",
         "learnlng": "learning",
-
-        # Algorithms
         "algorlthm": "algorithm",
-        "algorthm": "algorithm",
-        "algoritm": "algorithm",
-        "algorlthms": "algorithms",
-
-        # Database
+        "algorithrn": "algorithm",
         "databse": "database",
-        "datbase": "database",
-        "datatbase": "database",
-        "databases": "databases",
-
-        # Summarization
+        "databa5e": "database",
+        "databaze": "database",
+        "schemа": "schema",
+        "scheema": "schema",
+        "relaton": "relation",
+        "relational": "relational",
+        "normalizatlon": "normalization",
         "summarizatlon": "summarization",
-        "summarizaton": "summarization",
-        "summarisation": "summarization",
+        "transactlon": "transaction",
+        "concurrencv": "concurrency",
+        "dependencv": "dependency",
+        "independance": "independence",
+        "independency": "independence",
+        "physlcal": "physical",
+        "loglcal": "logical",
+        "extemal": "external",
+        "intemal": "internal",
+        "extemal": "external",
+        "retrievaI": "retrieval",
+        "consistencv": "consistency",
+        "integritv": "integrity",
+        "securitv": "security",
+        "authentlcation": "authentication",
+        "authorizatlon": "authorization",
+        "organizatlon": "organization",
+        "organised": "organized",
+        "orgamzed": "organized",
 
-        # Information
-        "informtion": "information",
-        "informatlon": "information",
-        "informaton": "information",
-
-        # Application
-        "applicaton": "application",
-        "applicatlon": "application",
-        "applicatons": "applications",
-
-        # Technology
-        "technolgy": "technology",
-        "technlogy": "technology",
-        "technolgies": "technologies",
-
-        # Development
-        "developement": "development",
-        "develpment": "development",
-        "developmnt": "development",
-
-        # Processing
-        "procesing": "processing",
-        "processlng": "processing",
-
-        # Recognition
-        "recogniton": "recognition",
-        "recognltion": "recognition",
-        "recognition": "recognition",
-
-        # Generation
-        "generaton": "generation",
-        "genaration": "generation",
-
-        # Education
-        "educaton": "education",
-        "educatlon": "education",
-
-        # Student
-        "studnt": "student",
-        "studnts": "students",
-        "studnet": "student",
-
-        # Teacher
-        "techer": "teacher",
-        "teachr": "teacher",
-
-        # Computer
-        "computr": "computer",
-        "compter": "computer",
-
-        # Software
-        "softwere": "software",
-        "softwar": "software",
-
-        # Hardware
-        "hardwere": "hardware",
-
-        # Network
-        "netwrok": "network",
-        "netowrk": "network",
-        "netwrork": "network",
-
-        # Security
-        "securty": "security",
-        "secrity": "security",
-
-        # Memory
-        "memmory": "memory",
-        "memroy": "memory",
-
-        # Management
-        "managemnt": "management",
-        "managment": "management",
-
-        # Knowledge
-        "knowladge": "knowledge",
-        "knowlege": "knowledge",
-
-        # Concept
-        "concpet": "concept",
-        "conecpt": "concept",
-        "consept": "concept",
-
-        # Example
-        "exampe": "example",
-        "exmaple": "example",
-
-        # Different
-        "diffrent": "different",
-        "differnt": "different",
-
-        # Function
-        "funtion": "function",
-        "fuction": "function",
-        "functon": "function",
-
-        # Structure
-        "structre": "structure",
-
-        # Architecture
-        "architecure": "architecture",
-        "archtecture": "architecture",
-
-        # Methods
-        "methd": "method",
-        "metod": "method",
-
-        # Parameter
-        "paramter": "parameter",
-
-        # Variable
-        "variabl": "variable",
-        "varible": "variable",
-
-        # Language
-        "langauge": "language",
-
-        # Environment
-        "enviroment": "environment",
-        "environmnt": "environment",
-
-        # Implementation
-        "implemntation": "implementation",
-        "implementaton": "implementation",
-
-        # Advantages
-        "advantge": "advantage",
-        "disadvantge": "disadvantage",
-
-        # Important
-        "importnt": "important",
-
-        # Essential
-        "essentail": "essential",
-
-        # Words from your OCR example
+        # Common OCR errors
         "demoralic": "democratic",
-        "democractic": "democratic",
         "deesnd": "does not",
         "truthworttiness": "truthfulness",
-        "truthworthyness": "truthfulness",
         "dogn": "dog",
         "whar": "what",
         "cane": "can",
         "starts": "status",
-        "practices": "practices",
         "religous": "religious",
-        "religon": "religion",
         "socail": "social",
         "ethcs": "ethics",
-        "ethcial": "ethical",
         "reasonning": "reasoning",
+
+        # DBMS specific
+        "sparc": "SPARC",
+        "spare": "SPARC",
+        "ansi/spare": "ANSI/SPARC",
+        "ansi/sparc": "ANSI/SPARC",
+        "b+tree": "B+ tree",
+        "b-tree": "B-tree",
+        "mvcc": "MVCC",
+        "dbm": "DBMS",
+        "dmbs": "DBMS",
+        "ddl": "DDL",
+        "dml": "DML",
+        "dcl": "DCL",
+        "tcl": "TCL",
     }
 
-    # =====================================================
+    # ============================================================
     # STOP WORDS
-    # =====================================================
+    # ============================================================
 
     STOP_WORDS = {
-        "the",
-        "is",
-        "are",
-        "was",
-        "were",
-        "a",
-        "an",
-        "and",
-        "or",
-        "but",
-        "of",
-        "to",
-        "in",
-        "on",
-        "for",
-        "with",
-        "as",
-        "by",
-        "from",
-        "this",
-        "that",
-        "these",
-        "those",
-        "it",
-        "its",
-        "be",
-        "been",
-        "being",
-        "can",
-        "could",
-        "may",
-        "might",
-        "will",
-        "would",
-        "should",
-        "has",
-        "have",
-        "had",
-        "do",
-        "does",
-        "did",
-        "they",
-        "their",
-        "them",
-        "we",
-        "our",
-        "you",
-        "your",
-        "he",
-        "she",
-        "his",
-        "her",
-        "which",
-        "who",
-        "what",
-        "when",
-        "where",
-        "how",
-        "than",
-        "also",
-        "such",
-        "into",
-        "through",
-        "using",
-        "used",
-        "use",
+        "a", "an", "the", "and", "or", "but", "if", "then",
+        "than", "that", "this", "these", "those", "is", "are",
+        "was", "were", "be", "been", "being", "to", "of", "in",
+        "on", "for", "from", "by", "with", "as", "at", "it",
+        "its", "into", "about", "after", "before", "during",
+        "through", "over", "under", "between", "within", "without",
+        "can", "could", "may", "might", "must", "should", "would",
+        "will", "shall", "do", "does", "did", "done",
+        "has", "have", "had", "having",
+        "i", "we", "you", "he", "she", "they", "them",
+        "their", "our", "your", "my", "his", "her",
+        "which", "who", "whom", "what", "where", "when", "why",
+        "how", "all", "each", "every", "some", "any", "many",
+        "more", "most", "other", "another", "such",
+        "there", "here", "also", "very", "only", "just",
+        "used", "using", "use"
     }
 
-    # =====================================================
-    # GET SPELL CHECKER
-    # =====================================================
+    # ============================================================
+    # IMPORTANT ACADEMIC WORDS
+    # ============================================================
+
+    IMPORTANCE_WORDS = {
+        "important",
+        "main",
+        "major",
+        "key",
+        "principle",
+        "principles",
+        "definition",
+        "defined",
+        "concept",
+        "concepts",
+        "purpose",
+        "objective",
+        "objectives",
+        "process",
+        "steps",
+        "step",
+        "method",
+        "methods",
+        "types",
+        "type",
+        "classification",
+        "classifications",
+        "characteristic",
+        "characteristics",
+        "feature",
+        "features",
+        "advantage",
+        "advantages",
+        "disadvantage",
+        "disadvantages",
+        "benefit",
+        "benefits",
+        "role",
+        "application",
+        "applications",
+        "example",
+        "examples",
+        "consists",
+        "include",
+        "includes",
+        "involves",
+        "provides",
+        "supports",
+        "allows",
+        "ensures",
+        "prevents",
+        "reduces",
+        "improves",
+    }
+
+    # ============================================================
+    # LENGTH SETTINGS
+    # ============================================================
+
+    LENGTH_SETTINGS = {
+        "short": {
+            "max_words": 180,
+            "max_sentences": 10,
+            "max_sections": 8,
+        },
+        "medium": {
+            "max_words": 320,
+            "max_sentences": 18,
+            "max_sections": 12,
+        },
+        "long": {
+            "max_words": 500,
+            "max_sentences": 28,
+            "max_sections": 16,
+        },
+    }
+
+    # ============================================================
+    # 1. NORMALIZE OCR TEXT
+    # ============================================================
 
     @classmethod
-    def get_spell_checker(cls):
-
-        if not SPELLCHECK_AVAILABLE:
-
-            return None
-
-        if cls._spell_checker is None:
-
-            print(
-                "Loading spelling correction system..."
-            )
-
-            cls._spell_checker = SpellChecker(
-                distance=1
-            )
-
-            print(
-                "Spelling correction system loaded."
-            )
-
-        return cls._spell_checker
-
-    # =====================================================
-    # PRESERVE CAPITALIZATION
-    # =====================================================
-
-    @staticmethod
-    def preserve_case(
-        original,
-        corrected
-    ):
-
-        if not corrected:
-
-            return original
-
-        if original.isupper():
-
-            return corrected.upper()
-
-        if (
-            original[:1].isupper()
-            and original[1:].islower()
-        ):
-
-            return corrected.capitalize()
-
-        return corrected
-
-    # =====================================================
-    # APPLY FAST OCR DICTIONARY
-    # =====================================================
-
-    @classmethod
-    def apply_ocr_corrections(
-        cls,
-        text
-    ):
-
+    def normalize_text(cls, text):
         if not text:
-
             return ""
 
-        def replace_word(match):
-
-            original = match.group(0)
-
-            lower = original.lower()
-
-            corrected = cls.OCR_CORRECTIONS.get(
-                lower
-            )
-
-            if not corrected:
-
-                return original
-
-            return cls.preserve_case(
-                original,
-                corrected
-            )
-
-        return re.sub(
-            r"\b[A-Za-z]+\b",
-            replace_word,
-            text
-        )
-
-    # =====================================================
-    # SPELLING CORRECTION
-    # =====================================================
-
-    @classmethod
-    def correct_spelling(
-        cls,
-        text
-    ):
-
-        if not text:
-
-            return ""
-
-        # -------------------------------------------------
-        # FAST KNOWN OCR CORRECTIONS
-        # -------------------------------------------------
-
-        text = cls.apply_ocr_corrections(
-            text
-        )
-
-        spell = cls.get_spell_checker()
-
-        if spell is None:
-
-            print(
-                "pyspellchecker not installed. "
-                "Using OCR correction dictionary only."
-            )
-
-            return text
-
-        # -------------------------------------------------
-        # GET UNIQUE WORDS
-        # -------------------------------------------------
-
-        words = re.findall(
-            r"\b[A-Za-z]{3,}\b",
-            text
-        )
-
-        unique_words = set(
-            word.lower()
-            for word in words
-        )
-
-        unknown_words = []
-
-        for word in unique_words:
-
-            # Technical terms should never be
-            # automatically changed.
-            if word in cls.TECHNICAL_TERMS:
-
-                continue
-
-            # Already manually corrected
-            if word in cls.OCR_CORRECTIONS:
-
-                continue
-
-            # Already cached
-            if word in cls._spell_cache:
-
-                continue
-
-            try:
-
-                if word not in spell:
-
-                    unknown_words.append(word)
-
-            except Exception:
-
-                continue
-
-        print(
-            "Potential spelling errors:",
-            len(unknown_words)
-        )
-
-        # -------------------------------------------------
-        # CORRECT UNKNOWN WORDS
-        # -------------------------------------------------
-
-        for word in unknown_words:
-
-            try:
-
-                correction = spell.correction(
-                    word
-                )
-
-                if not correction:
-
-                    cls._spell_cache[word] = word
-
-                    continue
-
-                # -------------------------------------------------
-                # DO NOT MAKE VERY AGGRESSIVE CHANGES
-                # -------------------------------------------------
-
-                if len(word) <= 4:
-
-                    cls._spell_cache[word] = word
-
-                    continue
-
-                if abs(
-                    len(correction) - len(word)
-                ) > 2:
-
-                    cls._spell_cache[word] = word
-
-                    continue
-
-                cls._spell_cache[word] = correction
-
-            except Exception:
-
-                cls._spell_cache[word] = word
-
-        # -------------------------------------------------
-        # REPLACE WORDS
-        # -------------------------------------------------
-
-        def replace_word(match):
-
-            original = match.group(0)
-
-            lower = original.lower()
-
-            # Technical term
-            if lower in cls.TECHNICAL_TERMS:
-
-                return original
-
-            # Known OCR correction
-            if lower in cls.OCR_CORRECTIONS:
-
-                corrected = cls.OCR_CORRECTIONS[
-                    lower
-                ]
-
-            else:
-
-                corrected = cls._spell_cache.get(
-                    lower,
-                    original
-                )
-
-            return cls.preserve_case(
-                original,
-                corrected
-            )
-
-        return re.sub(
-            r"\b[A-Za-z]{3,}\b",
-            replace_word,
-            text
-        )
-
-    # =====================================================
-    # CLEAN BASIC OCR TEXT
-    # =====================================================
-
-    @classmethod
-    def clean_text(
-        cls,
-        text
-    ):
-
-        if not text:
-
-            return ""
-
-        text = text.replace(
-            "\r\n",
-            "\n"
-        )
-
-        text = text.replace(
-            "\r",
-            "\n"
-        )
-
-        # -------------------------------------------------
-        # Remove URLs
-        # -------------------------------------------------
-
+        text = str(text)
+
+        # Normalize line endings
+        text = text.replace("\r\n", "\n")
+        text = text.replace("\r", "\n")
+
+        # Remove null characters
+        text = text.replace("\x00", " ")
+
+        # Normalize common unicode characters
+        replacements = {
+            "\u2018": "'",
+            "\u2019": "'",
+            "\u201c": '"',
+            "\u201d": '"',
+            "\u2013": "-",
+            "\u2014": "-",
+            "\u2212": "-",
+            "\u2026": "...",
+            "\u00a0": " ",
+        }
+
+        for old, new in replacements.items():
+            text = text.replace(old, new)
+
+        # Fix OCR words
+        text = cls.apply_ocr_corrections(text)
+
+        # Remove URLs and emails
         text = re.sub(
             r"https?://\S+|www\.\S+",
             " ",
             text,
-            flags=re.IGNORECASE
+            flags=re.IGNORECASE,
         )
 
-        # -------------------------------------------------
-        # Remove emails
-        # -------------------------------------------------
-
         text = re.sub(
-            r"\S+@\S+",
-            " ",
-            text
-        )
-
-        # -------------------------------------------------
-        # Remove page numbers
-        # -------------------------------------------------
-
-        text = re.sub(
-            r"\bpage\s+\d+\b",
+            r"\b[\w.+-]+@[\w-]+\.[\w.-]+\b",
             " ",
             text,
-            flags=re.IGNORECASE
         )
 
-        # -------------------------------------------------
-        # Remove "12 of 50"
-        # -------------------------------------------------
+        # Normalize repeated spaces
+        text = re.sub(r"[ \t]+", " ", text)
 
-        text = re.sub(
-            r"\b\d+\s+of\s+\d+\b",
-            " ",
-            text,
-            flags=re.IGNORECASE
-        )
-
-        # -------------------------------------------------
-        # Remove excessive spaces
-        # -------------------------------------------------
-
-        text = re.sub(
-            r"[ \t]+",
-            " ",
-            text
-        )
-
-        text = re.sub(
-            r"\n{2,}",
-            "\n",
-            text
-        )
+        # Normalize excessive blank lines
+        text = re.sub(r"\n{3,}", "\n\n", text)
 
         return text.strip()
 
-    # =====================================================
-    # CLEAN NOTE FORMAT
-    # =====================================================
+    # ============================================================
+    # 2. OCR CORRECTION
+    # ============================================================
 
     @classmethod
-    def clean_note_formatting(
-        cls,
-        text
-    ):
-
+    def apply_ocr_corrections(cls, text):
         if not text:
-
             return ""
 
-        # -------------------------------------------------
-        # Normalize line endings
-        # -------------------------------------------------
-
-        text = text.replace(
-            "\r\n",
-            "\n"
+        # Longer terms first
+        corrections = sorted(
+            cls.OCR_CORRECTIONS.items(),
+            key=lambda item: len(item[0]),
+            reverse=True,
         )
 
-        text = text.replace(
-            "\r",
-            "\n"
+        for wrong, correct in corrections:
+            pattern = r"\b" + re.escape(wrong) + r"\b"
+
+            text = re.sub(
+                pattern,
+                correct,
+                text,
+                flags=re.IGNORECASE,
+            )
+
+        return text
+
+    # ============================================================
+    # 3. SPELLING CORRECTION
+    # ============================================================
+
+    @classmethod
+    def correct_spelling(cls, text):
+        """
+        Conservative spelling correction.
+
+        We deliberately do NOT aggressively correct technical words.
+        """
+
+        if not text:
+            return ""
+
+        text = cls.apply_ocr_corrections(text)
+
+        # Optional spellchecker
+        try:
+            from spellchecker import SpellChecker
+            spell = SpellChecker()
+        except Exception:
+            spell = None
+
+        if spell is None:
+            return text
+
+        words = re.findall(r"\b[A-Za-z][A-Za-z'-]*\b", text)
+
+        protected = {
+            word.lower()
+            for word in cls.TECHNICAL_TERMS
+        }
+
+        corrections = {}
+
+        for word in words:
+            lower = word.lower()
+
+            # Protect technical vocabulary
+            if lower in protected:
+                continue
+
+            # Don't modify very short words
+            if len(word) <= 3:
+                continue
+
+            # Ignore mixed alphanumeric technical terms
+            if re.search(r"\d", word):
+                continue
+
+            # Already known
+            if lower in spell:
+                continue
+
+            candidate = spell.correction(word)
+
+            if not candidate:
+                continue
+
+            candidate = str(candidate)
+
+            # Avoid aggressive changes
+            if abs(len(candidate) - len(word)) > 2:
+                continue
+
+            # Only accept reasonably similar changes
+            if len(word) >= 6:
+                corrections[word] = candidate
+
+        for wrong, correct in corrections.items():
+            text = re.sub(
+                r"\b" + re.escape(wrong) + r"\b",
+                correct,
+                text,
+            )
+
+        return text
+
+    # ============================================================
+    # 4. DETECT HEADINGS
+    # ============================================================
+
+    @classmethod
+    def is_heading(cls, line):
+        if not line:
+            return False
+
+        line = line.strip()
+
+        if len(line) < 2 or len(line) > 140:
+            return False
+
+        # Numbered headings:
+        # 1. Introduction
+        # 2. Database Architecture
+        # 11. Indexing & File Organization
+        if re.match(
+            r"^\d+(?:\.\d+)*[\.)]?\s+[A-Za-z]",
+            line,
+        ):
+            return True
+
+        # Common academic section headings
+        heading_patterns = [
+            r"^three-schema architecture",
+            r"^data independence",
+            r"^dbms languages",
+            r"^data models?",
+            r"^entity[- ]relationship",
+            r"^relational model",
+            r"^types of keys",
+            r"^integrity constraints",
+            r"^relational algebra",
+            r"^types of joins",
+            r"^structured query language",
+            r"^common ddl commands",
+            r"^common dml commands",
+            r"^aggregate functions",
+            r"^normalization",
+            r"^functional dependency",
+            r"^normal forms?",
+            r"^acid properties",
+            r"^transaction states",
+            r"^schedules",
+            r"^concurrency control",
+            r"^concurrency problems",
+            r"^deadlock",
+            r"^file organization methods",
+            r"^indexing",
+            r"^database recovery",
+            r"^log-based recovery",
+            r"^recovery techniques",
+            r"^types of failures",
+        ]
+
+        lower = line.lower()
+
+        for pattern in heading_patterns:
+            if re.match(pattern, lower):
+                return True
+
+        # ALL CAPS short headings
+        letters = re.sub(r"[^A-Za-z]", "", line)
+
+        if (
+            len(letters) >= 4
+            and line.upper() == line
+            and len(line.split()) <= 10
+        ):
+            return True
+
+        return False
+
+    # ============================================================
+    # 5. CLEAN BROKEN LINES
+    # ============================================================
+
+    @classmethod
+    def clean_line(cls, line):
+        if not line:
+            return ""
+
+        line = line.strip()
+
+        # Remove page-number-only lines
+        if re.fullmatch(r"(page\s*)?\d+", line, flags=re.IGNORECASE):
+            return ""
+
+        # Remove decorative characters
+        line = re.sub(
+            r"^[•●○▪■◆◇►▶]+\s*",
+            "",
+            line,
         )
 
-        # -------------------------------------------------
-        # Remove circled numbers
+        # Remove repeated separators
+        line = re.sub(r"^[\-\_=*]{3,}$", "", line)
+
+        # Remove orphan closing punctuation
+        line = re.sub(r"^\)+\s*", "", line)
+
+        # IMPORTANT:
+        # Remove fragments like:
+        # "Bank tellers)"
+        # ")"
+        # "tellers)"
         #
-        # ① ② ③ ④ ⑤
-        # -------------------------------------------------
+        # only when they are clearly too short and end in punctuation.
+        words = line.split()
 
-        text = re.sub(
-            r"[\u2460-\u2473]",
-            " ",
-            text
-        )
+        if (
+            len(words) <= 3
+            and line.endswith((")", "]", "}"))
+            and not re.search(r"\b(e\.g|i\.e)\b", line, re.I)
+        ):
+            return ""
 
-        # -------------------------------------------------
-        # Remove enclosed / decorative numbers
-        # -------------------------------------------------
+        # Remove leading punctuation
+        line = re.sub(r"^[,;:.)\]}]+", "", line).strip()
 
-        text = re.sub(
-            r"[\u2776-\u277F]",
-            " ",
-            text
-        )
-
-        # -------------------------------------------------
-        # Remove common bullet symbols
-        # -------------------------------------------------
-
-        text = re.sub(
-            r"(?m)^\s*[*•●▪◦‣➢➤►◆◇]+\s*",
-            "",
-            text
-        )
-
-        # -------------------------------------------------
-        # Remove numbering at beginning of line
-        #
-        # 1. Example
-        # 2) Example
-        # 5 - Example
-        # -------------------------------------------------
-
-        text = re.sub(
-            r"(?m)^\s*\d+\s*[\.\)]\s*",
-            "",
-            text
-        )
-
-        text = re.sub(
-            r"(?m)^\s*\d+\s*[-–—]\s*",
-            "",
-            text
-        )
-
-        # -------------------------------------------------
-        # Remove "Q1", "Q.1", "Question 1"
-        # -------------------------------------------------
-
-        text = re.sub(
-            r"(?im)^\s*"
-            r"(?:q|question)"
-            r"\s*\.?\s*\d+"
-            r"\s*[:.\-]?\s*",
-            "",
-            text
-        )
-
-        # -------------------------------------------------
-        # Remove mark/question labels
-        #
-        # # 2mark
-        # 2 mark
-        # 2 marks
-        # 5 mark question
-        # -------------------------------------------------
-
-        text = re.sub(
-            r"(?i)"
-            r"#?\s*\d+\s*"
-            r"(?:marks?|mark)"
-            r"(?:\s+question)?"
-            r"\s*[:.\-]?\s*",
-            "",
-            text
-        )
-
-        # -------------------------------------------------
-        # Remove standalone # @
-        # -------------------------------------------------
-
-        text = re.sub(
-            r"(?m)^\s*[#@&]+\s*",
-            "",
-            text
-        )
-
-        # -------------------------------------------------
-        # Clean UNIT headings.
-        #
-        # Keep the heading words but remove
-        # unnecessary numbering.
-        #
-        # UNIT-III SCIENTIFIC VALUES
-        # becomes
-        # SCIENTIFIC VALUES
-        # -------------------------------------------------
-
-        text = re.sub(
-            r"(?im)"
-            r"^\s*unit\s*[-–—]?\s*"
-            r"(?:[ivxlcdm]+|\d+)"
-            r"\s*[:.\-]?\s*",
-            "",
-            text
-        )
-
-        # -------------------------------------------------
-        # Remove excessive punctuation used as decoration
-        # -------------------------------------------------
-
-        text = re.sub(
-            r"(?m)^\s*[-_=]{2,}\s*$",
-            "",
-            text
-        )
-
-        # -------------------------------------------------
         # Normalize spaces
-        # -------------------------------------------------
+        line = re.sub(r"\s+", " ", line)
 
-        text = re.sub(
-            r"[ \t]+",
-            " ",
-            text
-        )
+        return line.strip()
 
-        text = re.sub(
-            r"\n{2,}",
-            "\n",
-            text
-        )
+    # ============================================================
+    # 6. REMOVE PDF / OCR NOISE
+    # ============================================================
+
+    @classmethod
+    def clean_pdf_text(cls, text):
+        text = cls.normalize_text(text)
+
+        if not text:
+            return ""
+
+        lines = text.split("\n")
+        cleaned = []
+
+        for line in lines:
+            line = cls.clean_line(line)
+
+            if not line:
+                continue
+
+            # Remove obvious table-of-contents page numbers
+            line = re.sub(
+                r"\.{3,}\s*\d+\s*$",
+                "",
+                line,
+            )
+
+            cleaned.append(line)
+
+        # --------------------------------------------------------
+        # Join wrapped lines carefully
+        # --------------------------------------------------------
+
+        final_lines = []
+
+        for line in cleaned:
+
+            if not final_lines:
+                final_lines.append(line)
+                continue
+
+            previous = final_lines[-1]
+
+            # Never merge headings
+            if cls.is_heading(line):
+                final_lines.append(line)
+                continue
+
+            if cls.is_heading(previous):
+                final_lines.append(line)
+                continue
+
+            # Don't merge bullet-like lines
+            if line.startswith(("-", "•", "●")):
+                final_lines.append(line)
+                continue
+
+            # If previous line clearly continues
+            if (
+                not previous.endswith(
+                    (".", "!", "?", ":", ";", ")", "]")
+                )
+                and len(previous.split()) < 25
+            ):
+                final_lines[-1] = previous + " " + line
+            else:
+                final_lines.append(line)
+
+        text = "\n".join(final_lines)
+
+        # Final whitespace cleanup
+        text = re.sub(r"[ \t]+", " ", text)
+        text = re.sub(r"\n{3,}", "\n\n", text)
 
         return text.strip()
 
-    # =====================================================
-    # REMOVE QUESTION-LIKE LINES
-    # =====================================================
+    # ============================================================
+    # 7. SPLIT INTO SECTIONS
+    # ============================================================
 
     @classmethod
-    def is_question_line(
-        cls,
-        sentence
-    ):
+    def split_into_sections(cls, text):
+        """
+        Converts:
 
-        if not sentence:
+            Heading
+            sentence
+            sentence
 
-            return False
+            Heading
+            sentence
 
-        clean = sentence.strip()
+        into structured sections.
+        """
 
-        # Direct question
-        if clean.endswith("?"):
+        lines = text.split("\n")
 
-            return True
+        sections = []
+        current_title = "Introduction"
+        current_lines = []
 
-        # Common exam question formats
-        patterns = [
+        for line in lines:
+            line = line.strip()
 
-            r"^\s*what\s+is\b",
+            if not line:
+                continue
 
-            r"^\s*what\s+are\b",
+            if cls.is_heading(line):
 
-            r"^\s*define\b",
+                if current_lines:
+                    sections.append({
+                        "title": current_title,
+                        "text": " ".join(current_lines).strip(),
+                    })
 
-            r"^\s*explain\b",
+                current_title = line
+                current_lines = []
 
-            r"^\s*describe\b",
+            else:
+                current_lines.append(line)
 
-            r"^\s*write\s+about\b",
+        if current_lines:
+            sections.append({
+                "title": current_title,
+                "text": " ".join(current_lines).strip(),
+            })
 
-            r"^\s*how\s+can\b",
+        return sections
 
-            r"^\s*why\s+is\b",
-
-            r"^\s*why\s+are\b",
-
-            r"^\s*discuss\b",
-
-            r"^\s*list\s+the\b",
-
-        ]
-
-        for pattern in patterns:
-
-            if re.search(
-                pattern,
-                clean,
-                flags=re.IGNORECASE
-            ):
-
-                return True
-
-        return False
-
-    # =====================================================
-    # CODE-LIKE DETECTION
-    # =====================================================
+    # ============================================================
+    # 8. SENTENCE SPLITTING
+    # ============================================================
 
     @classmethod
-    def is_code_like(
-        cls,
-        text
-    ):
-
+    def split_sentences(cls, text):
         if not text:
-
-            return True
-
-        patterns = [
-
-            r"</?[a-zA-Z][^>]*>",
-
-            r"<%.*?%>",
-
-            r"\bpublic\s+(class|static|void)\b",
-
-            r"\bprivate\s+(class|static|void)\b",
-
-            r"\bprotected\s+(class|static|void)\b",
-
-            r"\b(int|float|double|boolean|char)"
-            r"\s+\w+\s*[=;]",
-
-            r"\w+\.\w+\s*\(",
-
-            r"\w+\s*\([^)]*\)\s*\{",
-
-            r"\borg\.\w+",
-
-            r"\b(SELECT|INSERT|UPDATE|DELETE)\b"
-            r".+\b(FROM|INTO|WHERE)\b",
-        ]
-
-        for pattern in patterns:
-
-            if re.search(
-                pattern,
-                text,
-                flags=re.IGNORECASE
-            ):
-
-                return True
-
-        words = max(
-            len(text.split()),
-            1
-        )
-
-        symbols = len(
-            re.findall(
-                r"[{}\[\]();=<>\"']",
-                text
-            )
-        )
-
-        if symbols / words > 0.30:
-
-            return True
-
-        return False
-
-    # =====================================================
-    # SENTENCE SPLITTING
-    # =====================================================
-
-    @classmethod
-    def split_sentences(
-        cls,
-        text
-    ):
-
-        if not text:
-
             return []
 
-        # -------------------------------------------------
-        # First use punctuation
-        # -------------------------------------------------
+        # Protect abbreviations
+        protected = text
 
-        sentences = re.split(
-            r"(?<=[.!?])\s+",
-            text
+        abbreviations = [
+            "e.g.",
+            "i.e.",
+            "etc.",
+            "vs.",
+            "Dr.",
+            "Mr.",
+            "Mrs.",
+            "Ms.",
+        ]
+
+        for index, abbr in enumerate(abbreviations):
+            protected = protected.replace(
+                abbr,
+                f"__ABBR{index}__",
+            )
+
+        # Sentence boundaries
+        pieces = re.split(
+            r"(?<=[.!?])\s+(?=[A-Z0-9])",
+            protected,
         )
 
-        result = []
+        sentences = []
 
-        for sentence in sentences:
+        for piece in pieces:
 
-            sentence = sentence.strip()
+            piece = piece.strip()
 
-            if not sentence:
+            for index, abbr in enumerate(abbreviations):
+                piece = piece.replace(
+                    f"__ABBR{index}__",
+                    abbr,
+                )
 
+            if not piece:
                 continue
 
-            # Ignore very short fragments
-            if len(sentence.split()) < 4:
-
-                continue
-
-            # Ignore code
-            if cls.is_code_like(sentence):
-
-                continue
-
-            result.append(sentence)
-
-        # -------------------------------------------------
-        # OCR often loses punctuation.
-        # Try line/semicolon splitting as fallback.
-        # -------------------------------------------------
-
-        if len(result) < 3:
-
-            parts = re.split(
-                r"[;\n]+",
-                text
-            )
-
-            for part in parts:
-
-                part = part.strip()
-
-                if len(part.split()) < 5:
-
-                    continue
-
-                if cls.is_code_like(part):
-
-                    continue
-
-                result.append(part)
-
-        return result
-
-    # =====================================================
-    # REMOVE DUPLICATES
-    # =====================================================
-
-    @classmethod
-    def remove_duplicate_sentences(
-        cls,
-        sentences
-    ):
-
-        seen = set()
-
-        result = []
-
-        for sentence in sentences:
-
-            normalized = re.sub(
-                r"[^a-z0-9 ]",
+            # Remove accidental leading punctuation
+            piece = re.sub(
+                r"^[,;:)\]}]+",
                 "",
-                sentence.lower()
-            )
-
-            normalized = re.sub(
-                r"\s+",
-                " ",
-                normalized
+                piece,
             ).strip()
 
-            if not normalized:
+            # Ignore tiny fragments
+            words = piece.split()
 
+            if len(words) < 5:
                 continue
 
-            if normalized in seen:
-
+            # Ignore obvious OCR garbage
+            if cls.is_garbage_sentence(piece):
                 continue
 
-            seen.add(normalized)
+            sentences.append(piece)
 
-            result.append(sentence)
+        # If punctuation splitting failed,
+        # use semicolon/newline boundaries.
+        if len(sentences) < 2:
 
-        return result
-
-    # =====================================================
-    # WORD FREQUENCY
-    # =====================================================
-
-    @classmethod
-    def calculate_frequency(
-        cls,
-        sentences
-    ):
-
-        frequency = Counter()
-
-        for sentence in sentences:
-
-            words = re.findall(
-                r"\b[a-zA-Z]{3,}\b",
-                sentence.lower()
+            fallback = re.split(
+                r"[;\n]+",
+                text,
             )
 
-            for word in words:
+            sentences = []
 
-                if word in cls.STOP_WORDS:
+            for piece in fallback:
+                piece = piece.strip()
 
-                    continue
+                if len(piece.split()) >= 5:
+                    if not cls.is_garbage_sentence(piece):
+                        sentences.append(piece)
 
-                frequency[word] += 1
+        return sentences
 
-        return frequency
+    # ============================================================
+    # 9. GARBAGE DETECTION
+    # ============================================================
 
-    # =====================================================
-    # SENTENCE SCORE
-    # =====================================================
+    @classmethod
+    def is_garbage_sentence(cls, sentence):
+        if not sentence:
+            return True
+
+        words = sentence.split()
+
+        if len(words) < 4:
+            return True
+
+        # Too many symbols = probably OCR/code noise
+        symbols = len(
+            re.findall(r"[^A-Za-z0-9\s.,;:'\"()\-+/]", sentence)
+        )
+
+        if symbols > len(sentence) * 0.20:
+            return True
+
+        # Too many repeated characters
+        if re.search(r"(.)\1{4,}", sentence):
+            return True
+
+        # Orphan punctuation
+        if re.match(r"^[)\]}]", sentence):
+            return True
+
+        # Very high percentage of one-letter tokens
+        one_letter = sum(
+            1 for word in words
+            if len(re.sub(r"[^A-Za-z]", "", word)) == 1
+        )
+
+        if len(words) > 8 and one_letter / len(words) > 0.4:
+            return True
+
+        return False
+
+    # ============================================================
+    # 10. TOKENIZATION
+    # ============================================================
+
+    @classmethod
+    def tokenize(cls, text):
+        words = re.findall(
+            r"[A-Za-z][A-Za-z0-9+/#.-]*",
+            text.lower(),
+        )
+
+        return [
+            word
+            for word in words
+            if word not in cls.STOP_WORDS
+            and len(word) > 2
+        ]
+
+    # ============================================================
+    # 11. FREQUENCY
+    # ============================================================
+
+    @classmethod
+    def calculate_frequency(cls, sentences):
+        counter = Counter()
+
+        for sentence in sentences:
+            for word in cls.tokenize(sentence):
+                counter[word] += 1
+
+        if not counter:
+            return {}
+
+        max_frequency = max(counter.values())
+
+        return {
+            word: count / max_frequency
+            for word, count in counter.items()
+        }
+
+    # ============================================================
+    # 12. DETECT DEFINITION
+    # ============================================================
+
+    @classmethod
+    def is_definition(cls, sentence):
+        lower = sentence.lower()
+
+        patterns = [
+            r"\bis defined as\b",
+            r"\bcan be defined as\b",
+            r"\bis a\b",
+            r"\bis an\b",
+            r"\brefers to\b",
+            r"\bmeans\b",
+            r"\bis the process of\b",
+            r"\bis the ability to\b",
+            r"\bis a collection of\b",
+            r"\bis a structure that\b",
+            r"\bis software that\b",
+        ]
+
+        return any(
+            re.search(pattern, lower)
+            for pattern in patterns
+        )
+
+    # ============================================================
+    # 13. IMPORTANT CONTENT
+    # ============================================================
+
+    @classmethod
+    def is_important_content(cls, sentence):
+        lower = sentence.lower()
+
+        for word in cls.IMPORTANCE_WORDS:
+            if re.search(
+                r"\b" + re.escape(word) + r"\b",
+                lower,
+            ):
+                return True
+
+        return cls.is_definition(sentence)
+
+    # ============================================================
+    # 14. TOPIC SIMILARITY
+    # ============================================================
+
+    @classmethod
+    def word_overlap(cls, first, second):
+        a = set(cls.tokenize(first))
+        b = set(cls.tokenize(second))
+
+        if not a or not b:
+            return 0.0
+
+        return len(a & b) / max(
+            1,
+            min(len(a), len(b)),
+        )
+
+    # ============================================================
+    # 15. REDUNDANCY DETECTION
+    # ============================================================
+
+    @classmethod
+    def is_redundant(cls, sentence, selected):
+        for previous in selected:
+
+            similarity = cls.word_overlap(
+                sentence,
+                previous,
+            )
+
+            if similarity >= 0.72:
+                return True
+
+        return False
+
+    # ============================================================
+    # 16. SENTENCE SCORING
+    # ============================================================
 
     @classmethod
     def score_sentence(
         cls,
         sentence,
-        index,
+        frequency,
+        position,
         total_sentences,
-        frequency
+        section_title="",
     ):
 
-        words = re.findall(
-            r"\b[a-zA-Z]{3,}\b",
-            sentence.lower()
-        )
+        words = cls.tokenize(sentence)
 
-        meaningful_words = [
+        if not words:
+            return 0.0
 
-            word
-            for word in words
+        score = 0.0
 
-            if word not in cls.STOP_WORDS
-        ]
-
-        if not meaningful_words:
-
-            return 0
-
-        # -------------------------------------------------
-        # Frequency
-        # -------------------------------------------------
+        # --------------------------------------------------------
+        # Frequency score
+        # --------------------------------------------------------
 
         frequency_score = sum(
-            frequency[word]
-            for word in meaningful_words
+            frequency.get(word, 0)
+            for word in words
         )
 
         frequency_score /= max(
-            len(meaningful_words),
-            1
+            1,
+            len(words),
         )
 
-        # -------------------------------------------------
+        score += frequency_score * 3.0
+
+        # --------------------------------------------------------
         # Definition bonus
-        # -------------------------------------------------
+        # --------------------------------------------------------
 
-        definition_bonus = 0
+        if cls.is_definition(sentence):
+            score += 5.0
 
-        if re.search(
-            r"\b("
-            r"is|are|means|refers to|"
-            r"defined as|known as|"
-            r"called|consists of"
-            r")\b",
-            sentence,
-            flags=re.IGNORECASE
-        ):
+        # --------------------------------------------------------
+        # Academic importance
+        # --------------------------------------------------------
 
-            definition_bonus = 3
+        importance_count = sum(
+            1
+            for word in words
+            if word in cls.IMPORTANCE_WORDS
+        )
 
-        # -------------------------------------------------
-        # Important academic keywords
-        # -------------------------------------------------
+        score += min(
+            importance_count * 1.5,
+            6.0,
+        )
 
-        important_patterns = [
+        # --------------------------------------------------------
+        # Technical term bonus
+        # --------------------------------------------------------
 
-            r"\bimportant\b",
+        technical_count = sum(
+            1
+            for word in words
+            if word in cls.TECHNICAL_TERMS
+        )
 
-            r"\bmain\b",
+        score += min(
+            technical_count * 1.2,
+            7.0,
+        )
 
-            r"\bkey\b",
+        # --------------------------------------------------------
+        # Section title relevance
+        # --------------------------------------------------------
 
-            r"\bprinciple\b",
+        if section_title:
 
-            r"\bprinciples\b",
+            title_words = set(
+                cls.tokenize(section_title)
+            )
 
-            r"\badvantage\b",
+            sentence_words = set(words)
 
-            r"\bdisadvantage\b",
+            overlap = len(
+                title_words & sentence_words
+            )
 
-            r"\bbenefit\b",
+            score += overlap * 2.0
 
-            r"\bfeatures?\b",
+        # --------------------------------------------------------
+        # Position bonus
+        # --------------------------------------------------------
 
-            r"\bpurpose\b",
+        if total_sentences > 1:
 
-            r"\bobjective\b",
+            relative_position = (
+                position / (total_sentences - 1)
+            )
 
-            r"\bprocess\b",
+            # Slight preference for introductory sentences
+            if relative_position < 0.20:
+                score += 1.5
 
-            r"\btypes?\b",
+        # --------------------------------------------------------
+        # Ideal sentence length
+        # --------------------------------------------------------
 
-            r"\bstep\b",
+        word_count = len(sentence.split())
 
-            r"\bsteps\b",
+        if 10 <= word_count <= 35:
+            score += 2.0
 
-            r"\bmethod\b",
+        elif word_count > 50:
+            score -= 1.5
 
-            r"\bexample\b",
+        # --------------------------------------------------------
+        # Avoid question-like sentences
+        # --------------------------------------------------------
 
-            r"\bapplication\b",
+        if cls.is_question(sentence):
+            score -= 5.0
 
-            r"\bapplications\b",
+        # --------------------------------------------------------
+        # Avoid code
+        # --------------------------------------------------------
 
-            r"\bused for\b",
+        if cls.is_code_like(sentence):
+            score -= 3.0
 
-            r"\bconsists of\b",
+        return score
 
-            r"\brole\b",
+    # ============================================================
+    # 17. QUESTION DETECTION
+    # ============================================================
 
-            r"\bcharacteristics?\b",
+    @classmethod
+    def is_question(cls, sentence):
+        lower = sentence.lower().strip()
 
-            r"\bfeatures?\b",
+        if "?" in sentence:
+            return True
 
+        patterns = [
+            r"^what is\b",
+            r"^what are\b",
+            r"^why is\b",
+            r"^why are\b",
+            r"^how does\b",
+            r"^how do\b",
+            r"^how can\b",
+            r"^define\b",
+            r"^explain\b",
+            r"^describe\b",
+            r"^discuss\b",
+            r"^write about\b",
+            r"^list\b",
         ]
 
-        keyword_bonus = 0
+        return any(
+            re.match(pattern, lower)
+            for pattern in patterns
+        )
 
-        for pattern in important_patterns:
+    # ============================================================
+    # 18. CODE DETECTION
+    # ============================================================
 
+    @classmethod
+    def is_code_like(cls, sentence):
+        if not sentence:
+            return False
+
+        code_patterns = [
+            r"\bSELECT\b.+\bFROM\b",
+            r"\bINSERT\s+INTO\b",
+            r"\bUPDATE\b.+\bSET\b",
+            r"\bDELETE\s+FROM\b",
+            r"\bCREATE\s+TABLE\b",
+            r"\bpublic\s+static\s+void\b",
+            r"\bfunction\s+\w+\s*\(",
+            r"=>",
+            r"\{\s*[\w]+\s*:",
+        ]
+
+        for pattern in code_patterns:
             if re.search(
                 pattern,
                 sentence,
-                flags=re.IGNORECASE
+                flags=re.IGNORECASE,
             ):
+                return True
 
-                keyword_bonus += 1
-
-        # -------------------------------------------------
-        # Position bonus
-        # -------------------------------------------------
-
-        position_bonus = 0
-
-        if total_sentences > 0:
-
-            ratio = (
-                index /
-                total_sentences
+        # Too many programming symbols
+        symbols = len(
+            re.findall(
+                r"[{}[\]();<>:=]",
+                sentence,
             )
-
-            if ratio < 0.10:
-
-                position_bonus = 2
-
-            elif ratio < 0.25:
-
-                position_bonus = 1
-
-        # -------------------------------------------------
-        # Good sentence length
-        # -------------------------------------------------
-
-        word_count = len(
-            sentence.split()
         )
 
-        length_bonus = 0
+        if symbols >= 8:
+            return True
 
-        if 8 <= word_count <= 45:
+        return False
 
-            length_bonus = 1
-
-        # -------------------------------------------------
-        # Final score
-        # -------------------------------------------------
-
-        return (
-            frequency_score
-            + definition_bonus
-            + keyword_bonus
-            + position_bonus
-            + length_bonus
-        )
-
-    # =====================================================
-    # EXTRACT IMPORTANT SENTENCES
-    # =====================================================
+    # ============================================================
+    # 19. TABLE-LIKE CONTENT
+    # ============================================================
 
     @classmethod
-    def extract_important_sentences(
+    def is_table_like(cls, sentence):
+        """
+        Detect common extracted PDF table rows.
+        """
+
+        separators = [
+            "|",
+            ":",
+            "→",
+        ]
+
+        separator_count = sum(
+            sentence.count(separator)
+            for separator in separators
+        )
+
+        # DBMS command patterns
+        if re.search(
+            r"\b(DDL|DML|DCL|TCL)\b",
+            sentence,
+        ):
+            return True
+
+        if separator_count >= 2:
+            return True
+
+        return False
+
+    # ============================================================
+    # 20. SELECT SENTENCES FROM SECTION
+    # ============================================================
+
+    @classmethod
+    def select_section_sentences(
         cls,
-        sentences,
-        max_sentences=15,
-        max_words=220
+        section,
+        max_sentences,
     ):
 
-        if not sentences:
+        title = section["title"]
+        text = section["text"]
 
+        sentences = cls.split_sentences(text)
+
+        if not sentences:
             return []
 
         frequency = cls.calculate_frequency(
@@ -1380,437 +1328,514 @@ class SummarizationService:
 
         scored = []
 
-        total = len(sentences)
-
-        for index, sentence in enumerate(
-            sentences
-        ):
-
-            # -------------------------------------------------
-            # Do not include exam questions
-            # -------------------------------------------------
-
-            if cls.is_question_line(
-                sentence
-            ):
-
-                continue
+        for index, sentence in enumerate(sentences):
 
             score = cls.score_sentence(
-                sentence,
-                index,
-                total,
-                frequency
+                sentence=sentence,
+                frequency=frequency,
+                position=index,
+                total_sentences=len(sentences),
+                section_title=title,
             )
 
             scored.append(
-                (
-                    score,
-                    index,
-                    sentence
-                )
+                {
+                    "sentence": sentence,
+                    "score": score,
+                    "position": index,
+                }
             )
 
-        # -------------------------------------------------
         # Highest score first
-        # -------------------------------------------------
-
         scored.sort(
-            key=lambda item: item[0],
-            reverse=True
+            key=lambda item: item["score"],
+            reverse=True,
         )
 
-        selected = scored[
-            :max_sentences
-        ]
+        selected = []
 
-        # -------------------------------------------------
-        # Restore original order
-        # -------------------------------------------------
+        for item in scored:
 
-        selected.sort(
-            key=lambda item: item[1]
-        )
+            sentence = item["sentence"]
 
-        # -------------------------------------------------
-        # Word limit
-        # -------------------------------------------------
-
-        final_sentences = []
-
-        current_words = 0
-
-        for (
-            score,
-            index,
-            sentence
-        ) in selected:
-
-            sentence_words = len(
-                sentence.split()
-            )
-
-            if (
-                current_words
-                + sentence_words
-                > max_words
+            if cls.is_redundant(
+                sentence,
+                selected,
             ):
-
                 continue
 
-            final_sentences.append(
-                sentence
-            )
+            selected.append(sentence)
 
-            current_words += sentence_words
-
-            if len(final_sentences) >= max_sentences:
-
+            if len(selected) >= max_sentences:
                 break
 
-        # -------------------------------------------------
-        # Fallback
-        # -------------------------------------------------
+        # Restore original order
+        position_map = {
+            item["sentence"]: item["position"]
+            for item in scored
+        }
 
-        if not final_sentences:
+        selected.sort(
+            key=lambda sentence:
+            position_map.get(sentence, 999999)
+        )
 
-            for sentence in sentences:
+        return selected
 
-                if cls.is_question_line(
-                    sentence
-                ):
-
-                    continue
-
-                final_sentences.append(
-                    sentence
-                )
-
-                if len(final_sentences) >= 8:
-
-                    break
-
-        return final_sentences
-
-    # =====================================================
-    # FORMAT FINAL SUMMARY AS PARAGRAPH
-    # =====================================================
+    # ============================================================
+    # 21. SECTION IMPORTANCE
+    # ============================================================
 
     @classmethod
-    def format_summary_as_paragraph(
-        cls,
-        summary
-    ):
+    def score_section(cls, section):
+        title = section["title"]
+        text = section["text"]
 
-        if not summary:
+        score = 0.0
 
-            return ""
+        title_lower = title.lower()
 
-        # -------------------------------------------------
-        # Run formatting cleaner again as a final safety
-        # layer.
-        # -------------------------------------------------
+        important_titles = [
+            "introduction",
+            "architecture",
+            "data independence",
+            "data model",
+            "entity",
+            "relational",
+            "sql",
+            "normalization",
+            "transaction",
+            "acid",
+            "concurrency",
+            "indexing",
+            "file organization",
+            "recovery",
+        ]
 
-        summary = cls.clean_note_formatting(
-            summary
+        for keyword in important_titles:
+            if keyword in title_lower:
+                score += 4.0
+
+        if cls.is_definition(text):
+            score += 2.0
+
+        score += min(
+            len(cls.tokenize(text)) / 50,
+            5.0,
         )
 
-        # -------------------------------------------------
-        # Remove question-like fragments
-        # -------------------------------------------------
+        return score
 
-        sentences = cls.split_sentences(
-            summary
-        )
+    # ============================================================
+    # 22. REMOVE DUPLICATES
+    # ============================================================
 
-        clean_sentences = []
+    @classmethod
+    def remove_duplicate_sentences(cls, sentences):
+        result = []
 
         for sentence in sentences:
 
-            if cls.is_question_line(
-                sentence
+            if cls.is_redundant(
+                sentence,
+                result,
             ):
-
                 continue
 
-            sentence = sentence.strip()
+            result.append(sentence)
 
-            if sentence:
+        return result
 
-                clean_sentences.append(
-                    sentence
-                )
+    # ============================================================
+    # 23. FORMAT SENTENCE
+    # ============================================================
 
-        # -------------------------------------------------
-        # If sentence splitting failed,
-        # use original cleaned summary.
-        # -------------------------------------------------
+    @classmethod
+    def format_sentence(cls, sentence):
+        sentence = sentence.strip()
 
-        if clean_sentences:
+        if not sentence:
+            return ""
 
-            summary = " ".join(
-                clean_sentences
-            )
-
-        # -------------------------------------------------
-        # Normalize spaces
-        # -------------------------------------------------
-
-        summary = re.sub(
-            r"\s+",
-            " ",
-            summary
+        # Remove accidental leading punctuation
+        sentence = re.sub(
+            r"^[,;:)\]}]+",
+            "",
+            sentence,
         ).strip()
 
-        # -------------------------------------------------
-        # Remove space before punctuation
-        # -------------------------------------------------
+        # Normalize spaces
+        sentence = re.sub(
+            r"\s+",
+            " ",
+            sentence,
+        )
 
-        summary = re.sub(
+        # Fix spacing around punctuation
+        sentence = re.sub(
             r"\s+([,.!?;:])",
             r"\1",
-            summary
+            sentence,
         )
 
-        # -------------------------------------------------
-        # Add missing spaces after punctuation
-        # -------------------------------------------------
+        # Capitalize if necessary
+        if sentence:
+            sentence = sentence[0].upper() + sentence[1:]
 
-        summary = re.sub(
-            r"([.!?])([A-Za-z])",
-            r"\1 \2",
-            summary
-        )
+        # Add period
+        if not sentence.endswith(
+            (".", "!", "?")
+        ):
+            sentence += "."
 
-        # -------------------------------------------------
-        # Remove accidental repeated punctuation
-        # -------------------------------------------------
+        return sentence
 
-        summary = re.sub(
-            r"\.{2,}",
-            ".",
-            summary
-        )
+    # ============================================================
+    # 24. FORMAT SUMMARY
+    # ============================================================
 
-        # -------------------------------------------------
-        # Final capital letter
-        # -------------------------------------------------
+    @classmethod
+    def format_summary(cls, sentences):
+        formatted = []
 
-        if summary:
+        for sentence in sentences:
 
-            summary = (
-                summary[0].upper()
-                + summary[1:]
+            sentence = cls.format_sentence(
+                sentence
             )
 
-        # -------------------------------------------------
-        # Final period
-        # -------------------------------------------------
+            if not sentence:
+                continue
 
-        if summary and summary[-1] not in ".!?":
+            if cls.is_garbage_sentence(sentence):
+                continue
 
-            summary += "."
+            formatted.append(sentence)
 
-        return summary.strip()
+        return " ".join(formatted).strip()
 
-    # =====================================================
-    # MAIN SUMMARY FUNCTION
-    # =====================================================
+    # ============================================================
+    # 25. LIMIT WORD COUNT
+    # ============================================================
+
+    @classmethod
+    def limit_words(cls, text, max_words):
+
+        words = text.split()
+
+        if len(words) <= max_words:
+            return text
+
+        shortened = " ".join(
+            words[:max_words]
+        )
+
+        # Don't leave incomplete punctuation
+        last_period = max(
+            shortened.rfind("."),
+            shortened.rfind("!"),
+            shortened.rfind("?"),
+        )
+
+        if last_period >= max_words * 0.65:
+            shortened = shortened[
+                :last_period + 1
+            ]
+
+        else:
+            shortened += "..."
+
+        return shortened
+
+    # ============================================================
+    # 26. MAIN SUMMARIZATION
+    # ============================================================
 
     @classmethod
     def summarize_text(
         cls,
         text,
-        length="medium"
+        length="medium",
     ):
+        """
+        Main public method.
 
-        print(
-            "\n========================================"
-        )
+        IMPORTANT:
+        This method signature remains compatible with the
+        existing SmartNotes backend.
+        """
 
-        print(
-            "STARTING FAST DOCUMENT SUMMARIZATION"
-        )
+        try:
 
-        print(
-            "========================================"
-        )
+            if not text:
+                return ""
 
-        if not text or not text.strip():
+            # ----------------------------------------------------
+            # Validate length
+            # ----------------------------------------------------
 
-            raise ValueError(
-                "Text cannot be empty."
+            length = str(
+                length or "medium"
+            ).lower()
+
+            if length not in cls.LENGTH_SETTINGS:
+                length = "medium"
+
+            settings = cls.LENGTH_SETTINGS[
+                length
+            ]
+
+            # ----------------------------------------------------
+            # Clean PDF/OCR text
+            # ----------------------------------------------------
+
+            cleaned_text = cls.clean_pdf_text(
+                text
             )
 
-        # =================================================
-        # STEP 1 - ORIGINAL TEXT
-        # =================================================
+            if not cleaned_text:
+                return ""
 
-        print(
-            "Original characters:",
-            len(text)
-        )
+            # ----------------------------------------------------
+            # Conservative spelling correction
+            # ----------------------------------------------------
 
-        # =================================================
-        # STEP 2 - BASIC CLEANING
-        # =================================================
-
-        cleaned_text = cls.clean_text(
-            text
-        )
-
-        # =================================================
-        # STEP 3 - REMOVE OCR FORMATTING
-        # =================================================
-
-        cleaned_text = cls.clean_note_formatting(
-            cleaned_text
-        )
-
-        print(
-            "Cleaned characters:",
-            len(cleaned_text)
-        )
-
-        # =================================================
-        # STEP 4 - SPELLING CORRECTION
-        # =================================================
-
-        print(
-            "Starting spelling correction..."
-        )
-
-        corrected_text = cls.correct_spelling(
-            cleaned_text
-        )
-
-        print(
-            "Spelling correction completed."
-        )
-
-        # =================================================
-        # STEP 5 - SENTENCE EXTRACTION
-        # =================================================
-
-        sentences = cls.split_sentences(
-            corrected_text
-        )
-
-        print(
-            "Sentences found:",
-            len(sentences)
-        )
-
-        # =================================================
-        # STEP 6 - REMOVE DUPLICATES
-        # =================================================
-
-        sentences = (
-            cls.remove_duplicate_sentences(
-                sentences
+            cleaned_text = cls.correct_spelling(
+                cleaned_text
             )
-        )
 
-        print(
-            "Unique sentences:",
-            len(sentences)
-        )
+            # ----------------------------------------------------
+            # Split into academic sections
+            # ----------------------------------------------------
 
-        # =================================================
-        # STEP 7 - SUMMARY SIZE
-        # =================================================
-
-        if length == "short":
-
-            max_sentences = 8
-            max_words = 120
-
-        elif length == "long":
-
-            max_sentences = 20
-            max_words = 320
-
-        else:
-
-            max_sentences = 15
-            max_words = 220
-
-        # =================================================
-        # STEP 8 - IMPORTANT SENTENCES
-        # =================================================
-
-        important_sentences = (
-            cls.extract_important_sentences(
-                sentences,
-                max_sentences=max_sentences,
-                max_words=max_words
+            sections = cls.split_into_sections(
+                cleaned_text
             )
-        )
 
-        print(
-            "Important sentences:",
-            len(important_sentences)
-        )
+            if not sections:
+                sections = [{
+                    "title": "Notes",
+                    "text": cleaned_text,
+                }]
 
-        # =================================================
-        # STEP 9 - JOIN AS PARAGRAPH
-        # =================================================
+            # ----------------------------------------------------
+            # Remove useless tiny sections
+            # ----------------------------------------------------
 
-        summary = " ".join(
-            important_sentences
-        )
+            valid_sections = []
 
-        # =================================================
-        # STEP 10 - FINAL CLEANING
-        # =================================================
+            for section in sections:
 
-        summary = cls.format_summary_as_paragraph(
-            summary
-        )
+                section_text = section["text"]
 
-        # =================================================
-        # FALLBACK
-        # =================================================
+                if len(section_text.split()) < 5:
+                    continue
 
-        if not summary:
+                valid_sections.append(section)
 
-            words = corrected_text.split()
+            if valid_sections:
+                sections = valid_sections
 
-            if len(words) > max_words:
+            # ----------------------------------------------------
+            # Score sections
+            # ----------------------------------------------------
 
-                summary = " ".join(
-                    words[:max_words]
+            for section in sections:
+                section["score"] = cls.score_section(
+                    section
                 )
 
-            else:
+            # ----------------------------------------------------
+            # Important sections first
+            # ----------------------------------------------------
 
-                summary = corrected_text
+            sections.sort(
+                key=lambda item: item["score"],
+                reverse=True,
+            )
 
-            summary = (
-                cls.format_summary_as_paragraph(
-                    summary
+            sections = sections[
+                :settings["max_sections"]
+            ]
+
+            # ----------------------------------------------------
+            # Select content from each section
+            # ----------------------------------------------------
+
+            selected_sentences = []
+
+            for section in sections:
+
+                # At least one important sentence
+                # from each meaningful section.
+                section_sentence_limit = 2
+
+                if length == "long":
+                    section_sentence_limit = 3
+
+                section_sentences = (
+                    cls.select_section_sentences(
+                        section,
+                        section_sentence_limit,
+                    )
+                )
+
+                for sentence in section_sentences:
+
+                    if cls.is_redundant(
+                        sentence,
+                        selected_sentences,
+                    ):
+                        continue
+
+                    selected_sentences.append(
+                        sentence
+                    )
+
+            # ----------------------------------------------------
+            # If selection is too small, fill from best sections
+            # ----------------------------------------------------
+
+            if len(selected_sentences) < 4:
+
+                for section in sections:
+
+                    additional = (
+                        cls.select_section_sentences(
+                            section,
+                            4,
+                        )
+                    )
+
+                    for sentence in additional:
+
+                        if cls.is_redundant(
+                            sentence,
+                            selected_sentences,
+                        ):
+                            continue
+
+                        selected_sentences.append(
+                            sentence
+                        )
+
+                        if (
+                            len(selected_sentences)
+                            >= settings["max_sentences"]
+                        ):
+                            break
+
+                    if (
+                        len(selected_sentences)
+                        >= settings["max_sentences"]
+                    ):
+                        break
+
+            # ----------------------------------------------------
+            # Final redundancy removal
+            # ----------------------------------------------------
+
+            selected_sentences = (
+                cls.remove_duplicate_sentences(
+                    selected_sentences
                 )
             )
 
-        # =================================================
-        # FINAL RESULT
-        # =================================================
+            # ----------------------------------------------------
+            # Limit number of sentences
+            # ----------------------------------------------------
 
-        print(
-            "\n========================================"
-        )
+            selected_sentences = (
+                selected_sentences[
+                    :settings["max_sentences"]
+                ]
+            )
 
-        print(
-            "FAST DOCUMENT SUMMARIZATION COMPLETED"
-        )
+            # ----------------------------------------------------
+            # Format
+            # ----------------------------------------------------
 
-        print(
-            "Summary words:",
-            len(summary.split())
-        )
+            summary = cls.format_summary(
+                selected_sentences
+            )
 
-        print(
-            "========================================\n"
-        )
+            # ----------------------------------------------------
+            # Limit words
+            # ----------------------------------------------------
 
-        return summary
+            summary = cls.limit_words(
+                summary,
+                settings["max_words"],
+            )
+
+            # ----------------------------------------------------
+            # Final safety cleanup
+            # ----------------------------------------------------
+
+            summary = re.sub(
+                r"\s+",
+                " ",
+                summary,
+            ).strip()
+
+            # ----------------------------------------------------
+            # Fallback
+            # ----------------------------------------------------
+
+            if not summary:
+
+                fallback_sentences = (
+                    cls.split_sentences(
+                        cleaned_text
+                    )
+                )
+
+                fallback_sentences = (
+                    fallback_sentences[
+                        :settings["max_sentences"]
+                    ]
+                )
+
+                summary = cls.format_summary(
+                    fallback_sentences
+                )
+
+                summary = cls.limit_words(
+                    summary,
+                    settings["max_words"],
+                )
+
+            return summary
+
+        except Exception as exc:
+
+            # Never allow summarization failure
+            # to break note upload.
+            print(
+                "SUMMARIZATION ERROR:",
+                str(exc),
+            )
+
+            # Safe fallback
+            try:
+
+                cleaned = cls.normalize_text(
+                    text or ""
+                )
+
+                sentences = cls.split_sentences(
+                    cleaned
+                )
+
+                summary = cls.format_summary(
+                    sentences[:10]
+                )
+
+                return cls.limit_words(
+                    summary,
+                    200,
+                )
+
+            except Exception:
+
+                return str(text or "")[:2000]

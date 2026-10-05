@@ -7,6 +7,9 @@ from database.db import mongo
 from routes.auth_routes import auth_bp
 from routes.note_routes import note_bp
 from routes.chat_routes import chat_bp
+from routes.progress_routes import progress_bp
+from routes.ocr_routes import ocr_bp
+
 app = Flask(__name__)
 app.config.from_object(Config)
 
@@ -19,8 +22,15 @@ app.register_blueprint(
     url_prefix="/api/notes"
 )
 app.register_blueprint(chat_bp, url_prefix="/api")
+app.register_blueprint(
+    ocr_bp,
+    url_prefix="/api"
+)
 
-
+app.register_blueprint(
+    progress_bp,
+    url_prefix="/api/progress"
+)
 @app.route("/api/health", methods=["GET"])
 def health():
     try:

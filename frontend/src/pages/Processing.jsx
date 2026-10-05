@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { CheckCircle, LoaderCircle, FileText } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 
+
 export default function Processing() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -69,6 +70,7 @@ export default function Processing() {
         </p>
 
       </div>
+      <Footer />
     </div>
   );
 }

@@ -908,7 +908,7 @@ export default function WeakTopics() {
 
 
       </main>
-
+      <Footer />
     </div>
 
   );

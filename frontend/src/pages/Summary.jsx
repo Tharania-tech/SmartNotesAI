@@ -14,6 +14,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 
 import AppHeader from "../components/AppHeader";
+
 import { generateSummary } from "../services/notesApi";
 
 import "./Summary.css";
@@ -758,7 +759,7 @@ export default function Summary() {
         </div>
 
       </main>
-
+      <Footer />
     </div>
   );
 }

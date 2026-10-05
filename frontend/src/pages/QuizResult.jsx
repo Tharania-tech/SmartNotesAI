@@ -2396,7 +2396,7 @@ export default function QuizResult() {
         </div>
 
       </main>
-
+      <Footer />
     </div>
 
   );

@@ -5,6 +5,7 @@ import "./Register.css";
 
 import Logo from "../components/Logo";
 
+
 export default function Register() {
   const navigate = useNavigate();
 

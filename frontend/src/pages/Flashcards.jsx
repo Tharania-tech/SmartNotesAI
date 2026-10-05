@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 
 import AppHeader from "../components/AppHeader";
+
 import { generateFlashcards } from "../services/notesApi";
 
 export default function Flashcards() {
@@ -609,7 +610,7 @@ export default function Flashcards() {
         </div>
 
       </main>
-
+      <Footer />
     </div>
   );
 }

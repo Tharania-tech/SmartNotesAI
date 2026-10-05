@@ -148,11 +148,15 @@ export async function generateFlashcards(
     return response.data;
 }
 
-/*
- * =========================================================
- * ASK AI ABOUT NOTE
- * =========================================================
- */
+/* ==========================================
+   PROGRESS
+   ========================================== */
+
+export const getProgress = async() => {
+    const response = await api.get("/progress");
+
+    return response.data;
+};
 
 
 

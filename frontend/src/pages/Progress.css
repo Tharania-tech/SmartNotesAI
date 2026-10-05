@@ -547,3 +547,156 @@
         padding: 18px;
     }
 }
+/* =========================================================
+   DYNAMIC PROGRESS ADDITIONS
+   ========================================================= */
+
+.progress-spin {
+    animation: progress-spin 0.8s linear infinite;
+}
+
+@keyframes progress-spin {
+    to { transform: rotate(360deg); }
+}
+
+.progress-error-card,
+.progress-loading-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 17px 20px;
+    margin-bottom: 18px;
+    background: #ffffff;
+    border: 1px solid #e1edf1;
+    border-radius: 16px;
+    color: #617789;
+}
+
+.progress-error-card {
+    color: #b15a45;
+    background: #fff9f7;
+    border-color: #f1d9d2;
+}
+
+.progress-error-card button {
+    margin-left: auto;
+    border: 0;
+    background: transparent;
+    color: #078f96;
+    font-weight: 850;
+    cursor: pointer;
+}
+
+.progress-loading-card {
+    min-height: 220px;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.progress-loading-card h2 {
+    margin: 0;
+    color: #19395d;
+    font-size: 18px;
+}
+
+.progress-loading-card p {
+    margin: 0;
+    color: #81919d;
+    font-size: 12px;
+}
+
+.progress-activity-summary {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin: -5px 0 4px 30px;
+}
+
+.progress-activity-summary strong {
+    color: #0a9f9b;
+    font-size: 24px;
+}
+
+.progress-activity-summary span {
+    color: #7d8d9a;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.progress-empty-inline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 7px;
+    min-height: 125px;
+    color: #7c8e9b;
+    text-align: center;
+}
+
+.progress-empty-inline svg {
+    color: #0a9f9b;
+}
+
+.progress-empty-inline strong {
+    color: #1d3d61;
+    font-size: 13px;
+}
+
+.progress-empty-inline span {
+    max-width: 460px;
+    font-size: 11px;
+}
+
+.weak-topic-panel {
+    margin-bottom: 18px;
+}
+
+.weak-topic-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.weak-topic-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px;
+    background: #fbfefe;
+    border: 1px solid #e4eef1;
+    border-radius: 13px;
+}
+
+.weak-topic-card > span {
+    width: 29px;
+    height: 29px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: 9px;
+    background: #fff4e8;
+    color: #d48829;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.weak-topic-card strong {
+    display: block;
+    color: #1d3d61;
+    font-size: 12px;
+}
+
+.weak-topic-card small {
+    display: block;
+    margin-top: 3px;
+    color: #8a99a5;
+    font-size: 10px;
+}
+
+@media (max-width: 700px) {
+    .weak-topic-grid {
+        grid-template-columns: 1fr;
+    }
+}

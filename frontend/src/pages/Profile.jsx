@@ -31,6 +31,7 @@ import {
 
 import AppHeader from "../components/AppHeader";
 
+
 import "./Profile.css";
 
 
@@ -2117,7 +2118,7 @@ export default function Profile() {
 
       )}
 
-
+    <Footer />
     </div>
 
   );

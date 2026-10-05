@@ -18,6 +18,7 @@ import {
 
 import AppHeader from "../components/AppHeader";
 
+
 import {
   getNotes
 } from "../services/notesApi";
@@ -1041,7 +1042,7 @@ export default function MyNotes() {
         )}
 
       </main>
-
+      <Footer />
     </div>
 
   );

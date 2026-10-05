@@ -110,7 +110,7 @@
     border-radius: 16px;
     background: linear-gradient( 135deg, #0ca4b8, #18acaf);
     color: white;
-    box-shadow: 0 10px 25px rgba(99, 91, 255, 0.22);
+    box-shadow: 0 10px 25px #16ead538;
 }
 
 
@@ -231,9 +231,9 @@
 }
 
 .summary-regenerate-button:hover {
-    border-color: #c7c4ff;
+    border-color: #1bc2b4;
     background: #f8f7ff;
-    color: #5bfff4;
+    color: #20847e;
 }
 
 .summary-regenerate-button:disabled {
@@ -349,8 +349,8 @@
     justify-content: center;
     margin-bottom: 19px;
     border-radius: 18px;
-    background: rgba(99, 91, 255, 0.09);
-    color: #169997;
+    background: rgba(87, 207, 216, 0.689);
+    color: #169997ac;
     animation: summaryPulse 2s ease-in-out infinite;
 }
 
@@ -543,13 +543,13 @@
     font-size: 13px;
     font-weight: 650;
     cursor: pointer;
-    box-shadow: 0 7px 18px rgba(99, 91, 255, 0.2);
+    box-shadow: 0 7px 18px rgba(11, 194, 200, 0.734);
     transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
 .summary-primary-button:hover {
     transform: translateY(-1px);
-    box-shadow: 0 10px 23px rgba(99, 91, 255, 0.27);
+    box-shadow: 0 10px 23px rgba(9, 198, 219, 0.87);
 }
 
 .summary-primary-button:disabled {
@@ -569,7 +569,7 @@
     gap: 14px;
     margin-top: 20px;
     padding: 20px 22px;
-    border: 1px solid rgba(99, 91, 255, 0.13);
+    border: 1px solid rgba(91, 255, 255, 0.604);
     border-radius: 17px;
     background: linear-gradient( 135deg, rgba(99, 91, 255, 0.06), rgba(124, 58, 237, 0.025));
 }
@@ -582,8 +582,8 @@
     align-items: center;
     justify-content: center;
     border-radius: 12px;
-    background: rgba(99, 91, 255, 0.1);
-    color: #17aa98;
+    background: rgba(60, 189, 157, 0.832);
+    color: #17aa9982;
 }
 
 .summary-tip-card h3 {

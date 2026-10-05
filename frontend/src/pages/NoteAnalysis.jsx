@@ -19,6 +19,7 @@ import {
 
 import AppHeader from "../components/AppHeader";
 
+
 export default function NoteAnalysis() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -554,7 +555,7 @@ export default function NoteAnalysis() {
         </div>
 
       </main>
-
+      <Footer />
     </div>
   );
 }

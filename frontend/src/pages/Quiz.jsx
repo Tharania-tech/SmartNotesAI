@@ -26,6 +26,7 @@ import {
 
 import AppHeader from "../components/AppHeader";
 
+
 import {
   generateQuiz,
   submitQuiz
@@ -2973,7 +2974,7 @@ function Quiz() {
         </div>
 
       </main>
-
+      <Footer/>
     </div>
 
   );

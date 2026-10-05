@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 
 import AppHeader from "../components/AppHeader";
+
 import { uploadNote } from "../services/notesApi";
 
 export default function UploadNotes() {
@@ -205,7 +206,7 @@ export default function UploadNotes() {
             AI-Powered Learning
           </div>
 
-          <h1> 
+          <h1>
             Turn your notes into
             <span> smarter learning</span>
           </h1>
@@ -574,7 +575,7 @@ export default function UploadNotes() {
         </p>
 
       </main>
-
+      <Footer />
     </div>
   );
 }

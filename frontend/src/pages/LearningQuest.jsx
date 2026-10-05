@@ -28,6 +28,7 @@ import {
 
 import AppHeader from "../components/AppHeader";
 
+
 import "./LearningQuest.css";
 
 
@@ -1357,7 +1358,7 @@ export default function LearningQuest() {
         )}
 
       </main>
-
+      <Footer />
     </div>
 
   );
