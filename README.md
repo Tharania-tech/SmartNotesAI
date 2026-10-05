@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SmartNotes AI — Complete Web Application
 
 SmartNotes AI is a full-stack learning workspace built from the supplied project.
@@ -184,3 +185,6 @@ Before deploying publicly:
 - Store Gemini/Ollama credentials only in environment variables/secrets.
 - Use HTTPS.
 - Add reverse proxy/upload storage controls for production.
+=======
+# SmartNotesAI
+>>>>>>> 7f3ceb855005a241e51e6b5199745942c57c8a0e
