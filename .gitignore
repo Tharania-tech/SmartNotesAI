@@ -1,0 +1,21 @@
+# Environment / secrets
+.env
+.venv/
+venv/
+
+# Node
+node_modules/
+frontend/dist/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Runtime uploads
+backend/uploads/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,58 @@
+/* =========================================================
+   SMARTNOTES AI LOGO FIX
+   ========================================================= */
+
+.brand-logo {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    width: auto !important;
+    min-width: max-content;
+    overflow: visible !important;
+}
+
+.brand-text {
+    display: inline-flex !important;
+    align-items: baseline;
+    gap: 4px;
+    width: auto !important;
+    min-width: max-content;
+    flex-shrink: 0;
+    overflow: visible !important;
+    white-space: nowrap !important;
+}
+
+.brand-name {
+    display: inline-block;
+    width: auto !important;
+    min-width: max-content;
+    white-space: nowrap !important;
+    color: #16375c;
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.7px;
+}
+
+.brand-ai {
+    display: inline-block;
+    width: auto !important;
+    min-width: 27px;
+    white-space: nowrap !important;
+    color: #00a6ad;
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+.header-logo-button {
+    display: inline-flex !important;
+    align-items: center;
+    width: auto !important;
+    min-width: max-content;
+    flex-shrink: 0;
+    overflow: visible !important;
+    white-space: nowrap !important;
+}

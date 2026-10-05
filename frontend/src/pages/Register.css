@@ -1,0 +1,554 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&display=swap");
+.register {
+    --teal-deep: #0b7d8c;
+    --teal: #12909f;
+    --blue: #1a8ed6;
+    --navy: #22365f;
+    --ink: #26384f;
+    --line: #bcd9e6;
+    --field-text: #4d6a7d;
+    --accent: #3e92b8;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 55fr 45fr;
+    font-family: "Outfit", system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: #fff;
+    color: var(--ink);
+}
+
+
+/* ============ brand panel ============ */
+
+.register__brand {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(150deg, var(--teal-deep) 0%, var(--teal) 45%, var(--blue) 100%);
+    color: #fff;
+}
+
+.register__brand-inner {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 3rem clamp(2rem, 6vw, 4.5rem) 2.5rem;
+}
+
+
+/* =====================================================
+   BRAND HEADER
+   ===================================================== */
+
+
+/* =====================================================
+   REGISTER BRAND HEADER
+   ===================================================== */
+
+.brand-head {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    margin-bottom: 35px;
+}
+
+
+/* =====================================================
+   WHITE LOGO CARD
+   ===================================================== */
+
+.brand-logo-card {
+    width: 250px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: hsla(0, 0%, 100%, 0.901);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    padding: 1px 1px;
+    box-shadow: 0 12px 30px rgba(0, 54, 72, 0.16), 0 4px 10px rgba(0, 54, 72, 0.08);
+    position: relative;
+    z-index: 5;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+
+/* Small hover effect */
+
+.brand-logo-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 35px rgba(0, 54, 72, 0.20), 0 5px 12px rgba(0, 54, 72, 0.10);
+}
+
+
+/* =====================================================
+   LOGO INSIDE CARD
+   ===================================================== */
+
+.brand-logo-card .smartnotes-logo-image {
+    width: 215px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+
+/* =====================================================
+   IF YOUR LOGO COMPONENT USES AN IMG DIRECTLY
+   ===================================================== */
+
+.brand-logo-card img {
+    width: 215px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+.brand-copy {
+    margin-top: auto;
+    max-width: 34ch;
+}
+
+.brand-badge {
+    display: inline-block;
+    padding: 0.55rem 1.3rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.brand-title {
+    margin: 1.4rem 0 1rem;
+    font-size: clamp(2.6rem, 4.6vw, 4.2rem);
+    font-weight: 800;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+}
+
+.brand-sub {
+    margin: 0;
+    max-width: 46ch;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.663);
+}
+
+
+/* stacked progress cards */
+
+.brand-steps {
+    list-style: none;
+    margin: auto 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-width: 340px;
+}
+
+.brand-step {
+    padding: 1rem 1.6rem;
+    border-radius: 14px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    box-shadow: 0 12px 24px rgba(8, 48, 68, 0.18);
+}
+
+.brand-step--study {
+    background: var(--navy);
+    width: 100%;
+}
+
+.brand-step--practice {
+    background: #3a94dd;
+    width: 92%;
+    margin-left: 4%;
+}
+
+.brand-step--grow {
+    background: #2cb2b4;
+    width: 84%;
+    margin-left: 8%;
+}
+
+.brand-chips {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.brand-chips li {
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+.brand-chips li::before {
+    content: "✓";
+    margin-right: 0.5rem;
+    font-size: 0.8rem;
+}
+
+
+/* decorative shapes */
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.07);
+    z-index: 1;
+}
+
+.orb--lg {
+    width: 320px;
+    height: 320px;
+    top: 14%;
+    right: 6%;
+}
+
+.orb--sm {
+    width: 400px;
+    height: 400px;
+    bottom: -14%;
+    right: 16%;
+    border: none;
+}
+
+.spark {
+    position: absolute;
+    z-index: 2;
+    right: 14%;
+    bottom: 34%;
+    display: grid;
+    place-items: center;
+    width: 92px;
+    height: 92px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+}
+
+.spark svg {
+    width: 42px;
+    height: 42px;
+}
+
+.brand-curve {
+    position: absolute;
+    top: 0;
+    right: -1px;
+    height: 100%;
+    width: 130px;
+    z-index: 4;
+    fill: #fff;
+}
+
+
+/* ============ form panel ============ */
+
+.register__panel {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: 3rem 1.5rem;
+    overflow: hidden;
+}
+
+.blob {
+    position: absolute;
+    background: linear-gradient(160deg, #1d3a63, #2a4f86);
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+.blob--top {
+    width: 230px;
+    height: 250px;
+    top: -70px;
+    right: -60px;
+    border-radius: 55% 45% 40% 60% / 60% 55% 45% 40%;
+}
+
+.blob--bottom {
+    width: 260px;
+    height: 230px;
+    bottom: -80px;
+    right: -70px;
+    border-radius: 45% 55% 60% 40% / 40% 60% 40% 60%;
+    background: linear-gradient(160deg, #12909f, #1d3a63);
+}
+
+.card {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 400px);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.card__title {
+    margin: 0;
+    font-size: 2.6rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--accent);
+}
+
+.card__eyebrow {
+    margin: 0.35rem 0 2.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #5e8fa8;
+}
+
+.field {
+    position: relative;
+    display: block;
+    margin-bottom: 0.9rem;
+    text-align: left;
+}
+
+.field__input {
+    width: 100%;
+    padding: 0.95rem 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    font: inherit;
+    font-size: 0.95rem;
+    color: var(--ink);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.field__input::placeholder {
+    color: #9dbccd;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.field__input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(62, 146, 184, 0.18);
+}
+
+.field__input.is-invalid {
+    border-color: #d2604f;
+}
+
+.field__toggle {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.9rem;
+    border: 0;
+    background: none;
+    color: #7ba6bc;
+    font: inherit;
+    font-size: 0.78rem;
+    cursor: pointer;
+    padding: 0.25rem 0.3rem;
+}
+
+.field__toggle:hover {
+    color: var(--accent);
+}
+
+.field__error {
+    display: block;
+    margin: 0.35rem 0 0 0.15rem;
+    font-size: 0.78rem;
+    color: #c0553f;
+}
+
+.field__error--block {
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+.consent {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0.3rem 0 1.4rem;
+    font-size: 0.82rem;
+    color: #5e7f92;
+    cursor: pointer;
+}
+
+.consent input {
+    width: 15px;
+    height: 15px;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.consent a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.consent a:hover {
+    text-decoration: underline;
+}
+
+.submit {
+    width: 100%;
+    padding: 0.95rem 1rem;
+    border: 0;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.submit:hover {
+    background: #337e9f;
+}
+
+.submit:active {
+    transform: translateY(1px);
+}
+
+.divider {
+    position: relative;
+    margin: 2rem 0 1.4rem;
+    text-align: center;
+}
+
+.divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--line);
+}
+
+.divider span {
+    position: relative;
+    padding: 0 0.9rem;
+    background: #fff;
+    font-size: 0.82rem;
+    color: var(--accent);
+}
+
+.socials {
+    display: flex;
+    justify-content: center;
+    gap: 0.9rem;
+}
+
+.social {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color 0.18s ease, transform 0.18s ease;
+}
+
+.social svg {
+    width: 18px;
+    height: 18px;
+}
+
+.social:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.card__foot {
+    margin: 1.8rem 0 0;
+    font-size: 0.85rem;
+    color: #6b8a9c;
+}
+
+.card__foot a {
+    color: var(--accent);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.card__foot a:hover {
+    text-decoration: underline;
+}
+
+
+/* keyboard focus */
+
+.register :is(button,
+a,
+input):focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+
+/* ============ responsive ============ */
+
+@media (max-width: 980px) {
+    .register {
+        grid-template-columns: 1fr;
+    }
+    .register__brand {
+        min-height: 420px;
+    }
+    .register__brand-inner {
+        gap: 1.6rem;
+        padding: 2.5rem 1.75rem 3rem;
+    }
+    .brand-curve {
+        display: none;
+    }
+    .brand-copy {
+        margin-top: 1.5rem;
+    }
+    .brand-steps {
+        margin-top: 1.5rem;
+    }
+    .spark,
+    .orb--lg {
+        display: none;
+    }
+    .blob--top,
+    .blob--bottom {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .register * {
+        transition: none !important;
+    }
+}

@@ -1,0 +1,626 @@
+/* =========================================================
+   SMARTNOTES AI
+   LOGIN PAGE ONLY
+   Header is NOT included here
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+.smart-login-page {
+    --navy: #102d5a;
+    --navy-dark: #0b2348;
+    --teal: #08a6b5;
+    --teal-dark: #078d9d;
+    --blue: #168bd7;
+    --cyan-bg: #e9faff;
+    --cyan-soft: #d9f5fa;
+    --text: #20334f;
+    --muted: #7c8da3;
+    --border: #dce9f0;
+    width: 100%;
+    min-height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 35px 45px;
+    background: radial-gradient( circle at 6% 15%, rgba(8, 166, 181, 0.09), transparent 25%), radial-gradient( circle at 94% 85%, rgba(22, 139, 215, 0.08), transparent 28%), #f7fcfe;
+    font-family: "Plus Jakarta Sans", Inter, Arial, sans-serif;
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   MAIN WRAPPER
+   ========================================================= */
+
+.smart-login-wrapper {
+    width: 100%;
+    max-width: 1120px;
+    min-height: 620px;
+    display: grid;
+    grid-template-columns: minmax(510px, 1.05fr) minmax(420px, 0.95fr);
+    border-radius: 26px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 28px 70px rgba(24, 65, 95, 0.12), 0 7px 25px rgba(24, 65, 95, 0.05);
+}
+
+
+/* =========================================================
+   LEFT ILLUSTRATION
+   ========================================================= */
+
+.smart-login-illustration {
+    position: relative;
+    min-width: 0;
+    min-height: 620px;
+    overflow: hidden;
+    padding: 37px 38px 25px;
+    color: #ffffff;
+    background: linear-gradient( 145deg, #0b7082 0%, #08a6b5 49%, #168bd7 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+/* Soft top circle */
+
+.smart-login-illustration::before {
+    content: "";
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    left: -200px;
+    top: -250px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+
+/* Soft right glow */
+
+.smart-login-illustration::after {
+    content: "";
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    right: -230px;
+    top: 40px;
+    border-radius: 50%;
+    background: radial-gradient( circle, rgba(255, 255, 255, 0.11), transparent 70%);
+}
+
+
+/* =========================================================
+   LEFT CONTENT
+   ========================================================= */
+
+.smart-login-illustration-content {
+    position: relative;
+    z-index: 5;
+    max-width: 420px;
+}
+
+.smart-login-mini-title {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.smart-login-illustration-content h1 {
+    margin: 16px 0 0;
+    font-size: 43px;
+    line-height: 1.02;
+    letter-spacing: -1.8px;
+    font-weight: 800;
+}
+
+.smart-login-illustration-content h1 strong {
+    color: #dffcff;
+}
+
+.smart-login-illustration-content p {
+    max-width: 390px;
+    margin: 14px 0 0;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   SVG SCENE
+   ========================================================= */
+
+.smart-student-scene {
+    width: 100%;
+    max-width: 560px;
+    position: relative;
+    z-index: 5;
+    margin: 0 auto;
+    flex: 1;
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.smart-student-svg {
+    width: 100%;
+    height: auto;
+    max-height: 390px;
+    display: block;
+}
+
+
+/* =========================================================
+   LEFT BOTTOM
+   ========================================================= */
+
+.smart-illustration-tag {
+    position: relative;
+    z-index: 8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 8px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   RIGHT FORM PANEL
+   ========================================================= */
+
+.smart-login-form-panel {
+    min-width: 0;
+    min-height: 620px;
+    padding: 28px 48px 23px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   TOP LINK
+   ========================================================= */
+
+.smart-login-top-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    color: #8290a1;
+    font-size: 9px;
+}
+
+.smart-login-top-link a {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    color: var(--teal-dark);
+    text-decoration: none;
+    font-weight: 800;
+}
+
+.smart-login-top-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   FORM CONTENT
+   ========================================================= */
+
+.smart-login-form-content {
+    width: 100%;
+    max-width: 385px;
+    margin: auto;
+}
+
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.smart-login-heading {
+    margin-bottom: 25px;
+}
+
+.smart-login-heading>span {
+    display: block;
+    color: var(--teal-dark);
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-bottom: 7px;
+}
+
+.smart-login-heading h2 {
+    margin: 0;
+    color: var(--navy);
+    font-size: 34px;
+    line-height: 1;
+    letter-spacing: -1.5px;
+    font-weight: 800;
+}
+
+.smart-login-heading p {
+    max-width: 330px;
+    margin: 9px 0 0;
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.smart-login-error {
+    margin-bottom: 15px;
+    padding: 9px 11px;
+    border-radius: 10px;
+    background: #fff5f5;
+    border: 1px solid #efd2d2;
+    color: #b44343;
+    font-size: 8px;
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.smart-login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.smart-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.smart-field>label,
+.smart-password-label label {
+    color: #27374f;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   PASSWORD LABEL
+   ========================================================= */
+
+.smart-password-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.smart-password-label button {
+    border: none;
+    padding: 0;
+    background: transparent;
+    color: var(--teal-dark);
+    font-family: inherit;
+    font-size: 8px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.smart-password-label button:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.smart-input {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #ffffff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.smart-input:focus-within {
+    border-color: rgba(8, 166, 181, 0.62);
+    box-shadow: 0 0 0 4px rgba(8, 166, 181, 0.07);
+    transform: translateY(-1px);
+}
+
+.smart-input>svg {
+    flex-shrink: 0;
+    color: #8b9aac;
+}
+
+.smart-input input {
+    width: 100%;
+    min-width: 0;
+    height: 48px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 10px;
+}
+
+.smart-input input::placeholder {
+    color: #a8b4c2;
+}
+
+
+/* =========================================================
+   PASSWORD BUTTON
+   ========================================================= */
+
+.smart-eye {
+    width: 29px;
+    height: 29px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #8291a4;
+    cursor: pointer;
+}
+
+.smart-eye:hover {
+    background: #f1f6f8;
+    color: #334257;
+}
+
+
+/* =========================================================
+   OPTIONS
+   ========================================================= */
+
+.smart-login-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: -3px;
+}
+
+.smart-login-options label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #6e7c8f;
+    font-size: 8px;
+    cursor: pointer;
+}
+
+.smart-login-options input {
+    width: 13px;
+    height: 13px;
+    accent-color: var(--teal);
+}
+
+.smart-secure {
+    color: #99a6b5;
+    font-size: 7px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.smart-login-button {
+    width: 100%;
+    height: 49px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0 15px;
+    border: none;
+    border-radius: 11px;
+    background: linear-gradient( 100deg, #078f9e, #08a6b5 50%, #168bd7);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 12px 24px rgba(8, 166, 181, 0.18);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+
+.smart-login-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 28px rgba(8, 166, 181, 0.22);
+}
+
+.smart-login-button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.smart-login-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   SPINNER
+   ========================================================= */
+
+.smart-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.30);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: smart-login-spin 0.7s linear infinite;
+}
+
+@keyframes smart-login-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   BOTTOM REGISTER
+   ========================================================= */
+
+.smart-login-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 21px;
+    color: #8d99a8;
+    font-size: 10px;
+}
+
+.smart-login-bottom a {
+    color: var(--teal-dark);
+    text-decoration: none;
+    font-weight: 800;
+}
+
+.smart-login-bottom a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.smart-login-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding-top: 17px;
+    color: #a0acba;
+    font-size: 7px;
+}
+
+.smart-login-footer span:first-child {
+    color: #718195;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+    .smart-login-page {
+        padding: 25px;
+    }
+    .smart-login-wrapper {
+        max-width: 920px;
+        grid-template-columns: minmax(420px, 1fr) minmax(390px, 1fr);
+    }
+    .smart-login-illustration {
+        padding: 30px;
+    }
+    .smart-login-illustration-content h1 {
+        font-size: 37px;
+    }
+    .smart-login-form-panel {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 780px) {
+    .smart-login-page {
+        min-height: calc(100vh - 60px);
+        padding: 12px;
+    }
+    .smart-login-wrapper {
+        max-width: 600px;
+        min-height: 0;
+        grid-template-columns: 1fr;
+        border-radius: 20px;
+    }
+    .smart-login-illustration {
+        display: none;
+    }
+    .smart-login-form-panel {
+        min-height: 620px;
+        padding: 22px 20px 18px;
+    }
+    .smart-login-form-content {
+        max-width: 100%;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+    .smart-login-page {
+        padding: 8px;
+    }
+    .smart-login-form-panel {
+        padding: 20px 15px 16px;
+    }
+    .smart-login-heading h2 {
+        font-size: 29px;
+    }
+    .smart-login-options {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+    }
+    .smart-login-footer {
+        flex-direction: column;
+        gap: 3px;
+    }
+}

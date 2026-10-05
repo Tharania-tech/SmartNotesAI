@@ -1,0 +1,587 @@
+/* =========================================================
+   MY NOTES PAGE
+   ========================================================= */
+
+.my-notes-page {
+    min-height: 100vh;
+    background: radial-gradient( circle at 85% 5%, rgba(19, 172, 177, 0.08), transparent 25%), linear-gradient( 180deg, #f8fcfd 0%, #f3f8fa 100%);
+    color: #18334c;
+}
+
+.my-notes-main {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 42px 0 70px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.my-notes-hero {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 28px;
+}
+
+.my-notes-kicker {
+    display: block;
+    margin-bottom: 7px;
+    color: #079699;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+.my-notes-hero h1 {
+    margin: 0;
+    color: #17334d;
+    font-size: 35px;
+    font-weight: 900;
+    letter-spacing: -1.3px;
+    line-height: 1.15;
+}
+
+.my-notes-hero p {
+    margin: 8px 0 0;
+    color: #8195a4;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   UPLOAD BUTTON
+   ========================================================= */
+
+.my-notes-upload-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 43px;
+    padding: 0 16px;
+    border: 1px solid #089aa2;
+    border-radius: 12px;
+    background: linear-gradient( 135deg, #11a5aa, #087f94);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 850;
+    cursor: pointer;
+    box-shadow: 0 9px 20px rgba(8, 137, 150, 0.16);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.my-notes-upload-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 13px 25px rgba(8, 137, 150, 0.21);
+}
+
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.my-notes-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.my-notes-search {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 340px;
+    height: 43px;
+    padding: 0 13px;
+    border: 1px solid #dce7ed;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 5px 17px rgba(41, 71, 90, 0.035);
+}
+
+.my-notes-search svg {
+    flex: 0 0 auto;
+    color: #8aa0ad;
+}
+
+.my-notes-search input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #304b63;
+    font-family: inherit;
+    font-size: 11px;
+}
+
+.my-notes-search input::placeholder {
+    color: #a0afb9;
+}
+
+
+/* =========================================================
+   NOTE COUNT
+   ========================================================= */
+
+.my-notes-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #7890a0;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.my-notes-count svg {
+    color: #0b9ca1;
+}
+
+
+/* =========================================================
+   NOTES GRID
+   ========================================================= */
+
+.my-notes-grid {
+    display: grid;
+    grid-template-columns: repeat( 3, minmax(0, 1fr));
+    gap: 15px;
+}
+
+
+/* =========================================================
+   NOTE CARD
+   ========================================================= */
+
+.my-note-card {
+    position: relative;
+    min-height: 190px;
+    /*
+      Extra bottom padding gives enough room
+      for the Open Note button.
+    */
+    padding: 19px 19px 68px;
+    border: 1px solid #dfe9ee;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 7px 23px rgba(38, 70, 89, 0.04);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.my-note-card:hover {
+    transform: translateY(-3px);
+    border-color: #c7e1e4;
+    box-shadow: 0 14px 29px rgba(38, 70, 89, 0.07);
+}
+
+
+/* =========================================================
+   NOTE CARD TOP
+   ========================================================= */
+
+.my-note-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.my-note-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 41px;
+    height: 41px;
+    border-radius: 12px;
+    background: #eaf9f8;
+    color: #07979c;
+}
+
+.my-note-type {
+    color: #8ba0ad;
+    font-size: 8px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   NOTE CONTENT
+   ========================================================= */
+
+.my-note-content {
+    margin-top: 20px;
+    padding-right: 5px;
+}
+
+.my-note-content h3 {
+    overflow: hidden;
+    margin: 0;
+    color: #29445c;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.45;
+    text-overflow: ellipsis;
+}
+
+.my-note-content p {
+    margin: 7px 0 0;
+    color: #91a0ac;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   OPEN NOTE BUTTON
+   ========================================================= */
+
+.my-note-open {
+    position: absolute;
+    right: 19px;
+    bottom: 19px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-width: 115px;
+    height: 38px;
+    padding: 0 15px;
+    border: none;
+    border-radius: 10px;
+    background: #08a6b5;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 850;
+    cursor: pointer;
+    opacity: 1;
+    visibility: visible;
+    /*
+      No animation.
+      The button stays in the same position.
+    */
+    transform: none;
+    box-shadow: none;
+    transition: none;
+}
+
+
+/* =========================================================
+   OPEN NOTE BUTTON
+   NO HOVER EFFECT
+   ========================================================= */
+
+.my-note-open:hover,
+.my-note-open:focus,
+.my-note-open:active {
+    background: #08a6b5;
+    color: #ffffff;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    outline: none;
+}
+
+
+/* =========================================================
+   OPEN NOTE ARROW
+   ========================================================= */
+
+.my-note-open svg {
+    width: 16px;
+    height: 16px;
+    transform: none;
+}
+
+.my-note-open:hover svg,
+.my-note-open:focus svg,
+.my-note-open:active svg {
+    transform: none;
+}
+
+
+/* =========================================================
+   EMPTY / ERROR / LOADING STATE
+   ========================================================= */
+
+.my-notes-state,
+.my-notes-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    padding: 35px;
+    text-align: center;
+    border: 1px dashed #cedfe5;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.76);
+}
+
+.my-notes-state h3,
+.my-notes-empty h2 {
+    margin: 15px 0 6px;
+    color: #2c475f;
+    font-size: 16px;
+    font-weight: 850;
+}
+
+.my-notes-state p,
+.my-notes-empty p {
+    max-width: 470px;
+    margin: 0;
+    color: #8799a7;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   EMPTY / ERROR ICON
+   ========================================================= */
+
+.my-notes-state-icon,
+.my-notes-empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 17px;
+    background: #eaf9f8;
+    color: #099a9e;
+}
+
+
+/* =========================================================
+   EMPTY / ERROR BUTTON
+   ========================================================= */
+
+.my-notes-state button,
+.my-notes-empty button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    height: 38px;
+    margin-top: 18px;
+    padding: 0 15px;
+    border: 1px solid #cfe2e8;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #377687;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 850;
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   LOADER
+   ========================================================= */
+
+.my-notes-loader {
+    width: 34px;
+    height: 34px;
+    border: 3px solid #dcebef;
+    border-top-color: #0ca0a5;
+    border-radius: 50%;
+    animation: my-notes-spin 0.9s linear infinite;
+}
+
+@keyframes my-notes-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+    .my-notes-grid {
+        grid-template-columns: repeat( 2, minmax(0, 1fr));
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+    .my-notes-main {
+        width: calc(100% - 24px);
+        padding-top: 28px;
+        padding-bottom: 50px;
+    }
+    .my-notes-hero {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .my-notes-hero h1 {
+        font-size: 29px;
+    }
+    .my-notes-upload-button {
+        width: 100%;
+    }
+    .my-notes-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .my-notes-search {
+        width: 100%;
+    }
+    .my-notes-grid {
+        grid-template-columns: 1fr;
+    }
+    .my-note-card {
+        min-height: 190px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+    .my-notes-main {
+        width: calc(100% - 18px);
+    }
+    .my-note-card {
+        padding: 17px 17px 65px;
+    }
+    /* =========================================================
+   NOTE CARD TOP
+========================================================= */
+    .my-note-card-top {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    /* =========================================================
+   DELETE NOTE BUTTON
+========================================================= */
+    .my-note-delete {
+        margin-left: auto;
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 9px;
+        background: transparent;
+        color: #8b93a7;
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+    /* =========================================================
+   DELETE HOVER
+========================================================= */
+    .my-note-delete:hover {
+        background: rgba(239, 68, 68, 0.10);
+        color: #ef4444;
+        transform: translateY(-1px);
+    }
+    /* =========================================================
+   DELETE ACTIVE
+========================================================= */
+    .my-note-delete:active {
+        transform: scale(0.94);
+    }
+    /* =========================================================
+   DELETE DISABLED
+========================================================= */
+    .my-note-delete:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        transform: none;
+    }
+    /* =========================================================
+   DELETE FOCUS
+========================================================= */
+    .my-note-delete:focus-visible {
+        outline: 2px solid rgba(239, 68, 68, 0.35);
+        outline-offset: 2px;
+    }
+    .my-note-open {
+        right: 17px;
+        bottom: 17px;
+        min-width: 110px;
+    }
+}
+
+
+/* =========================================================
+   RED DELETE NOTE BUTTON
+========================================================= */
+
+.my-note-delete {
+    margin-left: auto;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 9px;
+    background: #ef4444;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+/* HOVER */
+
+.my-note-delete:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(239, 68, 68, 0.25);
+}
+
+
+/* CLICK */
+
+.my-note-delete:active {
+    transform: scale(0.94);
+}
+
+
+/* DISABLED */
+
+.my-note-delete:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* FOCUS */
+
+.my-note-delete:focus-visible {
+    outline: 2px solid rgba(239, 68, 68, 0.4);
+    outline-offset: 2px;
+}
