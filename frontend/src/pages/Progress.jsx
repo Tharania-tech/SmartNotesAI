@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 
 import AppHeader from "../components/AppHeader";
-import Footer from "./components/Footer";
+import Footer from "../components/Footer";
 import { getProgress } from "../services/notesApi";
 import "./Progress.css";
 

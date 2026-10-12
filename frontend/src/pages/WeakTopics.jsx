@@ -16,7 +16,7 @@ import {
 } from "react-router-dom";
 
 import AppHeader from "../components/AppHeader";
-import Footer from "./components/Footer";
+
 import "./WeakTopics.css";
 
 
@@ -908,7 +908,7 @@ export default function WeakTopics() {
 
 
       </main>
-      <Footer />
+      
     </div>
 
   );
