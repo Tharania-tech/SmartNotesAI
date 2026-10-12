@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { CheckCircle, LoaderCircle, FileText } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
-
+import Footer from "./components/Footer";
 
 export default function Processing() {
   const navigate = useNavigate();

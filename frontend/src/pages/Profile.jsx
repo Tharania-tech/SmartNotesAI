@@ -30,7 +30,7 @@ import {
 } from "react-router-dom";
 
 import AppHeader from "../components/AppHeader";
-
+import Footer from "./components/Footer";
 
 import "./Profile.css";
 

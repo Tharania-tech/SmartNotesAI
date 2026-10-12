@@ -25,7 +25,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import AppHeader from "../components/AppHeader";
-
+import Footer from "./components/Footer";
 import { deleteNote, getNotes, getProgress } from "../services/notesApi";
 import "../index.css";
 

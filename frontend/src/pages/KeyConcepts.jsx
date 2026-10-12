@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 
 import AppHeader from "../components/AppHeader";
-
+import Footer from "./components/Footer";
 import { getConcepts } from "../services/notesApi";
 
 export default function KeyConcepts() {
